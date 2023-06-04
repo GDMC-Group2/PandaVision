@@ -2,7 +2,6 @@ __all__ = []
 # __version__
 
 from interfaceUtils import runCommand
-import interfaceUtils
 import lantern
 from gdpc import Editor, Block, Transform, geometry
 editor = Editor(buffering=False) #Trueだと動かない

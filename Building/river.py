@@ -1,6 +1,6 @@
 import random
 from interfaceUtils import runCommand
-import interfaceUtils
+
 import lantern
 from gdpc import Editor, Block, Transform, geometry
 editor = Editor(buffering=True)

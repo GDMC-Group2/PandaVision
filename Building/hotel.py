@@ -2,8 +2,8 @@ __all__ = []
 # __version__
 
 import random
+from interfaceUtils import runCommand
 from gdpc import Editor, Block, Transform, geometry
-
 editor = Editor(buffering=True)
 
 
@@ -3326,31 +3326,31 @@ def fire(x,y,z):
         for zz in range(2):
             fire="firework_rocket{Fireworks:{Flight:9,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
             command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.0 {fire} 64"
-            editor.runCommand(command)
+            runCommand(command)
             fire="firework_rocket{Fireworks:{Flight:7,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
             command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.1 {fire} 64"
-            editor.runCommand(command)
+            runCommand(command)
             fire="firework_rocket{Fireworks:{Flight:8,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
             command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.2 {fire} 64"
-            editor.runCommand(command)
+            runCommand(command)
             fire="firework_rocket{Fireworks:{Flight:10,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
             command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.3 {fire} 64"
-            editor.runCommand(command)
+            runCommand(command)
             fire="firework_rocket{Fireworks:{Flight:8,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
             command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.4 {fire} 64"
-            editor.runCommand(command)
+            runCommand(command)
             fire="firework_rocket{Fireworks:{Flight:9,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
             command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.5 {fire} 64"
-            editor.runCommand(command)
+            runCommand(command)
             fire="firework_rocket{Fireworks:{Flight:10,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
             command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.6 {fire} 64"
-            editor.runCommand(command)
+            runCommand(command)
             fire="firework_rocket{Fireworks:{Flight:8,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
             command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.7 {fire} 64"
-            editor.runCommand(command)
+            runCommand(command)
             fire="firework_rocket{Fireworks:{Flight:9,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
             command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.8 {fire} 64"
-            editor.runCommand(command)
+            runCommand(command)
 
 
 def floor_light(x,y,z,u_id,g_id,c_id,r_id): #u_id=glowtone,g_id=glass,c_id=carpet r_id=red_carpet 床照明
@@ -3429,33 +3429,33 @@ def panda(x,y,z):
     Z=z+35    
     command = f"summon panda {X} {y} {Z}"
     for i in range(4):
-        editor.runCommand(command)
+        runCommand(command)
     Z=z-35
     command = f"summon panda {X} {y} {Z}"
     for i in range(4):
-        editor.runCommand(command)
+        runCommand(command)
     
     X=x
     Y=y+6
     Z=z
     command = f"summon panda {X} {Y} {Z}"
     for i in range(4):
-        editor.runCommand(command)
+        runCommand(command)
     X=x+8
     Y=y+22
     command = f"summon panda {X} {Y} {Z}"
     for i in range(4):
-        editor.runCommand(command)
+        runCommand(command)
     X=x
     Y=y+35
     Z=z
     command = f"summon panda {X} {Y} {Z}"
     for i in range(4):
-        editor.runCommand(command)
+        runCommand(command)
     Y=y+47
     command = f"summon panda {X} {Y} {Z}"
     for i in range(4):
-        editor.runCommand(command)
+        runCommand(command)
 
 def dragon_x1(x,y,z,q_id,w_id,e_id,r_id,t_id,y_id):
     #z+1

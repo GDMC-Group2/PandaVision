@@ -1,4 +1,4 @@
-import interfaceUtils
+from interfaceUtils import runCommand
 from gdpc import Editor, Block, Transform, geometry
 editor=Editor(buffering=True)
 

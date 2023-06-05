@@ -28,6 +28,7 @@ WORLDSLICE = ED.loadWorldSlice(BUILD_AREA.toRect(), cache=True)  # this takes a 
 heights = WORLDSLICE.heightmaps["MOTION_BLOCKING_NO_LEAVES"]
 
 def main():
+    area = (0, 0, 300, 300)
     print(f"Build area is at position {area[0]}, {area[1]} with size {area[2]}, {area[3]}")
     command="gamerule doMobSpawning false"
     ED.runCommand(command)
@@ -40,13 +41,12 @@ def main():
         new_area.append(area[3] - area[3] // 5 * 2)
         area = new_area
     # ------------------------------------
-    worldSlice = WORLDSLICE(area)
     heightmap = WORLDSLICE.heightmaps["MOTION_BLOCKING_NO_LEAVES"]
-    heightmap, env, flag = getEnv(worldSlice)
+    heightmap, env, flag = getEnv.calcGoodHeightmap(WORLDSLICE)
     if flag:
         search_area = [(0, 0, 300, 300)]
     else:
-        search_BuildArea = SBA.SearchBuildArea(area=area, heightmap=heightmap, env=env, worldSlice=worldSlice)
+        search_BuildArea = SBA.SearchBuildArea(area=area, heightmap=heightmap, env=env, WORLDSLICE=WORLDSLICE)
         search_area = search_BuildArea.output() # tuple in list
     isMaxArea = 1
     for Area in search_area:
@@ -65,6 +65,14 @@ def main():
         hotel.hotel3(x,y,z)
 
 end_time = time()
+if __name__ == "__main__":
+    print(1)
+    begin_time = time()
+    print(1)
+    main()
+    end_time = time()
+    print("run time:", end_time-begin_time)
+
 print("run time:", end_time-begin_time)
 
 # setbuildarea 0 40 0 400 100 400

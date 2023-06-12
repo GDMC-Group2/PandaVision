@@ -1,5 +1,5 @@
 from interfaceUtils import runCommand
-import interfaceUtils
+
 from gdpc import Editor, Block, Transform, geometry
 editor=Editor(buffering=True)
 
@@ -1426,11 +1426,6 @@ def store3(x,y,z,f):
         store3_w(x,y,z)
     elif f=="e":
         store3_e(x,y,z)
-
-store1(-250,4,-145,"n")
-store1(-250,4,-175,"s")
-store1(-250,4,-205,"w")
-store1(-250,4,-235,"e")
 
 
 def rectanglesOverlap(r1, r2):

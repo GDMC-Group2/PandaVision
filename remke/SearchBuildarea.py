@@ -7,7 +7,7 @@ from box import Box
 
 # print("Editor")
 # Here we construct an Editor object
-ED = Editor(buffering=False)
+ED = Editor(buffering=True)
 
 # print("Build area")
 # Here we read start and end coordinates of our build area

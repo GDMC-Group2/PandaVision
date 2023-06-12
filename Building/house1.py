@@ -1,5 +1,4 @@
 from interfaceUtils import runCommand
-import interfaceUtils
 from gdpc import Editor, Block, Transform, geometry
  
 editor = Editor(buffering=True)
@@ -1556,11 +1555,6 @@ def house1(x,y,z,f):
         house1_e(x,y,z)
     elif f=="w":
         house1_w(x,y,z)
-
-house1(-50,4,-200,"n")
-house1(-50,4,-240,"s")
-house1(-50,4,-280,"e")
-house1(-50,4,-320,"w")
 
 
 def rectanglesOverlap(r1, r2):

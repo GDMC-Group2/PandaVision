@@ -3,9 +3,7 @@ __all__ = []
 
 import random
 from interfaceUtils import runCommand
-import interfaceUtils
 from gdpc import Editor, Block, Transform, geometry
- 
 editor = Editor(buffering=True)
 
 
@@ -3728,8 +3726,6 @@ def hotel3(x,y,z):
     Firework_s(x+31,y+1,z+39,"dispenser","redstone_wire","redstone_block","slime_block","sticky_piston","daylight_detector","air","polished_andesite")
     fire(x+31,y+1,z+39) 
 
-hotel(-79,4,-12)
-    
 
 
 def rectanglesOverlap(r1, r2):

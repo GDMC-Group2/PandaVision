@@ -1,4 +1,5 @@
-import interfaceUtils
+from interfaceUtils import runCommand
+
 import random
 from interfaceUtils import runCommand
 from gdpc import Editor, Block, Transform, geometry
@@ -6,8 +7,6 @@ editor = Editor(buffering=True)
 
 
 
-def getBlock(x,y,z):
-    interfaceUtils.getBlock(x,y,z)
 
 def check_coor(x,y,z):
     command = f"summon minecraft:shulker {x} {y} {z} {{Invulnerable:true,Glowing:true,Silent:true,Tags:[test],NoAI:true,PersistenceRequired:true}}"
@@ -584,7 +583,7 @@ def Bamboo(x,y,z,q_id,w_id,e_id):
         bamboo(x-15+random.randint(0,30),y,z-15+random.randint(0,7))
         bamboo(x-15+random.randint(0,30),y,z+15-random.randint(0,7))
     def bamboo_sapling(x,y,z):
-        p = getBlock(x,y,z)
+        p = editor.getBlock(x,y,z)
         if p is None:
             editor.placeBlock((x,y,z),Block(e_id))
     for i in range(15):
@@ -594,7 +593,7 @@ def Bamboo(x,y,z,q_id,w_id,e_id):
         bamboo_sapling(x-15+random.randint(0,30),y,z+15-random.randint(0,7))
 def Panda(x,y,z):
     def panda(x,y,z):
-        p = getBlock(x,y,z)
+        p = editor.getBlock(x,y,z)
         if p is None:
             command = f"summon panda {x} {y} {z}"
             runCommand(command)
@@ -614,7 +613,6 @@ def buildTower(x, y, z, level):
     # Panda(x,y,z)
 
 
-buildTower(-350,4,-150,5)
 
 def rectanglesOverlap(r1, r2):
     """Check that r1 and r2 do not overlap."""

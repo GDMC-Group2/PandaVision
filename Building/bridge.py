@@ -1,11 +1,10 @@
 __all__ = []
 # __version__
-
+#import lantern
 from interfaceUtils import runCommand
-import interfaceUtils
-import lantern
+from lantern import Lantern
 from gdpc import Editor, Block, Transform, geometry
-editor = Editor(buffering=False) #Trueだと動かない
+editor = Editor(buffering=True) #Trueだと動かない
 
 
 def bridge(x,y,z,q_id,w_id,e_id,r_id,t_id,y_id):
@@ -77,10 +76,10 @@ def bridge(x,y,z,q_id,w_id,e_id,r_id,t_id,y_id):
     editor.placeBlock((x-3,y+2,z+2),Block(y_id,{"type": "bottom"}))
     editor.placeBlock((x-3,y+2,z-2),Block(y_id,{"type": "bottom"}))
 
-    lantern.Lantern(x-5,y,z-6)
-    lantern.Lantern(x-5,y,z+6)
-    lantern.Lantern(x+5,y,z-6)
-    lantern.Lantern(x+5,y,z+6)
+    Lantern(x-5,y,z-6)
+    Lantern(x-5,y,z+6)
+    Lantern(x+5,y,z-6)
+    Lantern(x+5,y,z+6)
 
 def Bridge(x,y,z):
     bridge(x,y,z,"polished_andesite","smooth_stone","smooth_stone_slab","polished_andesite_stairs","lantern","polished_andesite_slab")
@@ -92,4 +91,3 @@ def rectanglesOverlap(r1, r2):
     else:
         return True
 
-Bridge(-74,4,74)

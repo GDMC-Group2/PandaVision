@@ -9,10 +9,11 @@ from terrian_adaptation import ICE_JIT_FlatFinder as ice_jit_F
 from terrian_adaptation import ICE_JIT_BorderAreaFinder as ice_jit_S
 from terrian_adaptation import ICE_JIT_GravityFinder as G
 from terrian_adaptation import ICE_JIT_Pioneer as P
+import road_generator as RG
 
 # print("Editor")
 # Here we construct an Editor object
-ED = Editor(buffering=False)
+ED = Editor(buffering=True)
 
 # print("Build area")
 # Here we read start and end coordinates of our build area
@@ -34,12 +35,11 @@ class SearchBuildArea():
     def output(self):
         h = ice_jit_HMap.HeightMap(self.env, self.heightmap, self.area[0], self.area[1], self.area[0] + self.area[2],
                                    self.area[1] + self.area[3])
-
         f = ice_jit_F.FlatFinder(self.worldSlice, h)  # Flat area finding
         # candidate_points = f.getCandidatePoints()  # Flat area's lowest norm points
         f_area = f.getMergeArea()  # Merge flat area
         new_array = np.zeros((f_area.shape))
-        centers, centers_ncd, f_area, new_array = self.findSettlement(f_area, new_array)  # avoid clusters
+        centers, centers_ncd= self.findSettlement(f_area, new_array)  # avoid clusters
         centers_int = [[int(num) for num in idx] for idx in centers]  # convert type to int from float
         border_map = ice_jit_S.BorderAreaFinder(f_area)  # Create border map
         area_with_border = border_map.getAreaMap()
@@ -80,6 +80,7 @@ class SearchBuildArea():
         print("Decide Areas:", end_time - begin_time)
         if mid_pos != []:
             begin_time = time()
+            RoadGene = RG.RoadGenerator(self.area, self.heightmap, new_array, area_with_border)
             maze = AS.make_maze(self.heightmap, area_with_border)
             m = mid_pos.copy()
             for one in centers_ncd:
@@ -89,15 +90,18 @@ class SearchBuildArea():
                 print('-' * 30)
                 start = (int(centers_sorted[i][0]), int(centers_sorted[i][1]))
                 end0 = (int(centers_sorted[i + 1][0]), int(centers_sorted[i + 1][1]))
-                print("r_start:", start[0] + self.area[0], start[1] + self.area[1])
-                print("r_end:", end0[0] + self.area[0], end0[1] + self.area[1])
-                AS.set_star_end(maze, start, end0)
+                r_start, r_end = RoadGene.find_real_start_end(start, end0)
+                start1 = (int(centers_sorted[i][0]), int(centers_sorted[i][1]))
+                end1 = (int(centers_sorted[i + 1][0]), int(centers_sorted[i + 1][1]))
+                print("r_start:", start1[0] + self.area[0], start1[1] + self.area[1])
+                print("r_end:", end1[0] + self.area[0], end1[1] + self.area[1])
+                AS.set_star_end(maze, start1, end1)
                 path_list = AS.run(maze)
             end_time = time()
             print("Generate Roads:", end_time - begin_time)
         return DecideArea_sorted
     
-    def findSettlement(area, worldSlice, heightmap):
+    def findSettlement(self, f_area, new_array):
         natural_blocks = []
         f = open('natural_blocks_list.txt', 'r')
         for line in f.readlines():
@@ -106,11 +110,11 @@ class SearchBuildArea():
         # natural_blocks.remove('minecraft:sandstone')
         X = []
         ID_name_table = []
-        s = np.zeros((area[2], area[3]), dtype=int)
-        for x in range(area[2]):
-            for z in range(area[3]):
-                real_pos = (x + area[0], heightmap[x][z] - 1, z + area[1])
-                block_info = ED.getBlock(real_pos)
+        s = np.zeros((self.area[2], self.area[3]), dtype=int)
+        for x in range(self.area[2]):
+            for z in range(self.area[3]):
+                real_pos = (x + self.area[0], self.heightmap[x][z] - 1, z + self.area[1])
+                block_info = self.worldSlice.getBlock(real_pos)
                 if block_info.id not in natural_blocks:
                     if block_info.id in ID_name_table:
                         block_id = ID_name_table.index(block_info.id)
@@ -140,20 +144,20 @@ class SearchBuildArea():
                 if one_cluster[1] > z_max:
                     z_max = one_cluster[1]
             a.append([x_min, x_max, z_min, z_max])
-
+        f_area, new_array = self.ChangeArray(clusters, f_area, new_array)
 
         from random import randrange
         # Panda invade Settlement
         buildarea = {
             'begin' :{
-                'x' : area[0],
-                'y' : 0,
-                'z' : area[1]
+                'x' : self.area[0],
+                'y' : -60,
+                'z' : self.area[1]
             },
             'end' : {
-                'x' : area[0] + area[2],
+                'x' : self.area[0] + self.area[2],
                 'y' : 200,
-                'z' : area[1] + area[3]
+                'z' : self.area[1] + self.area[3]
             }
         }
         buildarea_box = Box(buildarea)
@@ -167,14 +171,14 @@ class SearchBuildArea():
             for one_block_pos in one_c:
                 x = one_block_pos[0]
                 z = one_block_pos[1]
-                y = heightmap[x][z]
+                y = self.heightmap[x][z]
                 if y > roof_height:
                     roof_height = y
 
             for one_block_pos in one_c:
                 x = one_block_pos[0]
                 z = one_block_pos[1]
-                y = heightmap[x][z]
+                y = self.heightmap[x][z]
 
                 block_id = s[x][z]
                 block_name = ID_name_table[block_id]
@@ -214,34 +218,34 @@ class SearchBuildArea():
                     z_min = z
             check_flag = True
             for x in range(x_min, x_max + 1):
-                real_pos = (x + area[0], roof_height - 1, z_min - 1 + area[1])
+                real_pos = (x + self.area[0], roof_height - 1, z_min - 1 + self.area[1])
                 # tester.placeBlock(x + area[0], heightmap[x][z_min] - 2, z_min - 1 + area[1], 'minecraft:gold_block')
-                block_info = worldSlice.getBlockGlobal(real_pos)
+                block_info = self.worldSlice.getBlock(real_pos)
                 if 'stairs' not in block_info.id:
                     check_flag = False
                     break
                 # print(block_info)
             if check_flag:
                 y1 = roof_height + 1
-                x1 = x_min + area[0]
-                x2 = x_max + area[0]
-                z1 = (z_max - z_min) // 2 + z_min + + area[1]
+                x1 = x_min + self.area[0]
+                x2 = x_max + self.area[0]
+                z1 = (z_max - z_min) // 2 + z_min + + self.area[1]
                 roof_blocks_set_confirm.append([(x1, y1, z1), (x2, y1, z1), 'x'])
             # print(roof_height)
 
             else:
                 check_flag_z = True
                 for z in range(z_min, z_max + 1):
-                    real_pos = (x_min - 1 + area[0], roof_height - 1, z + area[1])
-                    block_info = worldSlice.getBlockGlobal(real_pos)
+                    real_pos = (x_min - 1 + self.area[0], roof_height - 1, z + self.area[1])
+                    block_info = self.worldSlice.getBlockGlobal(real_pos)
                     if 'stairs' not in block_info.id:
                         check_flag_z = False
                         break
                 if check_flag_z:
                     y1 = roof_height + 1
-                    z1 = z_min + area[1]
-                    z2 = z_max + area[1]
-                    x1 = (x_max - x_min) // 2 + x_min + + area[0]
+                    z1 = z_min + self.area[1]
+                    z2 = z_max + self.area[1]
+                    x1 = (x_max - x_min) // 2 + x_min + + self.area[0]
                     roof_blocks_set_confirm.append([(x1, y1, z1), (x1, y1, z2), 'z'])
 
         for one_roof in roof_blocks_set_confirm:
@@ -249,12 +253,12 @@ class SearchBuildArea():
             china_roof.make_roof(ED, one_roof[0], one_roof[1], orientation=one_roof[2])
 
         for one_block in invaded_blocks:
-            x = one_block[0] + area[0]
+            x = one_block[0] + self.area[0]
             y = one_block[1]
-            z = one_block[2] + area[1]
+            z = one_block[2] + self.area[1]
             block_info = ''
             if one_block[4] == 0:
-                state_tag = worldSlice.getBlockGlobal((x, y, z)).states
+                state_tag = self.worldSlice.getBlockGlobal((x, y, z)).states
                 block_info = one_block[3]
                 ED.placeBlock((x, y, z), Block(block_info, state_tag))
             elif one_block[4] == 1:
@@ -263,9 +267,9 @@ class SearchBuildArea():
         for one_center in centers:
             x = int(one_center[0])
             z = int(one_center[1])
-            y = heightmap[x][z]
-            x += area[0]
-            z += area[1]
+            y = self.heightmap[x][z]
+            x += self.area[0]
+            z += self.area[1]
             for i in range(5):
                 rnd_x = x + randrange(-10, 10)
                 rnd_y = y + randrange(5)
@@ -276,13 +280,13 @@ class SearchBuildArea():
         return centers, centers_ncd
     
     # Local Outlier Factor and detect the size of built Settlement
-    # def ChangeArray(self, clusters, f_area, new_array):
-    #     # 既存集落を保存
-    #     for cluster in clusters:
-    #         for pos in cluster:
-    #             f_area[pos[0], pos[1]] = -7 # same as -7
-    #             new_array[pos[0], pos[1]] = 1
-    #     return f_area, new_array
+    def ChangeArray(self, clusters, f_area, new_array):
+        # 既存集落を保存
+        for cluster in clusters:
+            for pos in cluster:
+                f_area[pos[0], pos[1]] = -7 # same as -7
+                new_array[pos[0], pos[1]] = 1
+        return f_area, new_array
 
 
 # def main():

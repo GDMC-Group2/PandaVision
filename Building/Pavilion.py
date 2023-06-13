@@ -414,5 +414,4 @@ def rectanglesOverlap(r1, r2):
     else:
         return True
 
-buildPavilion(-200,4,-115 ,"w")
 

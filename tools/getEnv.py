@@ -1,11 +1,20 @@
 import numpy as np
 from gdpc import Editor
-ED = Editor(buffering=False)
+ED = Editor(buffering=True)
 
-def calcGoodHeightmap(worldSlice, heightmapType = "MOTION_BLOCKING_NO_LEAVES"):
-    hm_mbnl = worldSlice.heightmaps[heightmapType]
+def calcGoodHeightmap(worldSlice):
+    area=[]
+    hm_mbnl = worldSlice.heightmaps["MOTION_BLOCKING_NO_LEAVES"]
     heightmap = hm_mbnl[:]
-    area = worldSlice.rect
+    wS_area = worldSlice.rect
+    #areaを変換
+    area.append(wS_area.offset[0])
+    area.append(wS_area.offset[1])
+    area.append(wS_area.size[0])
+    area.append(wS_area.size[1])
+
+    print(area)
+    test=0
     chikeyi=[[0 for i in range(area[3])]for j in range(area[2])]
     cnt = 0
     flag = True
@@ -13,7 +22,7 @@ def calcGoodHeightmap(worldSlice, heightmapType = "MOTION_BLOCKING_NO_LEAVES"):
         for z in range(area[3]):
             while True:
                 y = heightmap[x, z]
-                block_info = ED.getBlock(area[0] + x, y - 1, area[1] + z)
+                block_info= worldSlice.getBlock((area[0] + x, y - 1, area[1] + z))
                 block = block_info.id
                 if 'water' in block:
                     chikeyi[x][z]= 0
@@ -22,7 +31,7 @@ def calcGoodHeightmap(worldSlice, heightmapType = "MOTION_BLOCKING_NO_LEAVES"):
                     chikeyi[x][z]= 1
                 elif 'sand' in block:
                     chikeyi[x][z]= 2
-                elif 'stone' in block:
+                elif 'stone' in block and block!="cobblestone":
                     chikeyi[x][z]= 3
                 else:
                     chikeyi[x][z]= 4

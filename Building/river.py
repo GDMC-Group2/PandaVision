@@ -1,7 +1,6 @@
 import random
 from interfaceUtils import runCommand
-
-import lantern
+from lantern import Lantern
 from gdpc import Editor, Block, Transform, geometry
 editor = Editor(buffering=True)
 
@@ -191,15 +190,21 @@ def bridge(x,y,z,l,q_id,w_id,e_id,r_id,t_id,y_id):
     editor.placeBlock((x-47-m-3,y+2,z+2),Block(y_id,{"type": "bottom"}))
     editor.placeBlock((x-47-m-3,y+2,z-2),Block(y_id,{"type": "bottom"}))
 
-    lantern.Lantern(x+47+m-5,y,z-6)
-    lantern.Lantern(x+47+m-5,y,z+6)
-    lantern.Lantern(x+47+m+5,y,z-6)
-    lantern.Lantern(x+47+m+5,y,z+6)
+    Lantern(x+47+m-5,y,z-6)
+    Lantern(x+47+m-5,y,z+6)
+    Lantern(x+47+m+5,y,z-6)
+    Lantern(x+47+m+5,y,z+6)
 
-    lantern.Lantern(x-47-m-5,y,z-6)
-    lantern.Lantern(x-47-m-5,y,z+6)
-    lantern.Lantern(x-47-m+5,y,z-6)
-    lantern.Lantern(x-47-m+5,y,z+6)
+    Lantern(x-47-m-5,y,z-6)
+    Lantern(x-47-m-5,y,z+6)
+    Lantern(x-47-m+5,y,z-6)
+    Lantern(x-47-m+5,y,z+6)
+
+
+
+
+
+
 
 
 def river(x,y,z,L):   
@@ -207,12 +212,14 @@ def river(x,y,z,L):
     
 
 
-river(-50,4,-380,40)
 
-def rectanglesOverlap(r1, r2):
-    """Check that r1 and r2 do not overlap."""
-    if (r1 >= r2 + r2[2]) or (r1 + r1[2] <= r2) or (r1 + r1 <= r2) or (r1 >= r2 + r2):
-        return False
-    else:
-        return True
+
+
+
+
+
+
+
+
+
 

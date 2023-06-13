@@ -1,7 +1,9 @@
 from copy import deepcopy
-from gdpc import Editor, Block, WorldSlice
+from gdpc import Editor, Block, WorldSlice,Box
+from glm import  ivec3
 
-ED = Editor(buffering=False)
+
+ED = Editor(buffering=True)
 
 def FindRiver(heightmap, env):
     print("Finding rivers")
@@ -47,18 +49,34 @@ def FindRiver(heightmap, env):
     return RiverMap
 
 def RemoveTrees(heightmap, area):
-    print("Removing trees")
-    WORLDSLICE = ED.loadWorldSlice(area.toRect(), cache=True)
+    print("Removing trees") 
+    #-60がy座標下限,255が最大
+    offset=ivec3(area[0],-60,area[1])
+    size=ivec3(area[2],255,area[3])
+    box_area=Box(offset,size)
+    WORLDSLICE = ED.loadWorldSlice(box_area.toRect(), cache=True)
     heights = WORLDSLICE.heightmaps["MOTION_BLOCKING_NO_LEAVES"]
     heightmapWithTrees = WORLDSLICE.heightmaps["MOTION_BLOCKING"]
+
+
     heightDiff =  heightmapWithTrees - heightmap
     for x in range(area[2]):
-        for y in range(area[3]):
-            if heightDiff[x][y] != 0:
-                for i in range(heightDiff[x][y]):
+        for z in range(area[3]):
+            if heightDiff[x][z] != 0:
+                count=0
+                while(): #木の幹を消す
+                    name=heightmap.getBlock((x,heightmap[x][z]-count,z))
+                    if("_log" in name): 
+                        heightDiff[x][z]=+1
+                        count=+1
+                    else:
+                        break
+                for i in range(heightDiff[x][z]):
                     # print(area[0]+x, heightmap[x][y]+i, area[1]+y)
-                    ED.placeBlock((area[0]+x, heightmap[x][y]+i, area[1]+y), Block('air'))
+                    ED.placeBlock((area[0]+x, heightmap[x][z]+i, area[1]+z), Block('air'))
+                
     print('RemoveTrees done')
+
 
 def CoverFluid(heightmap, area, env, CoverRiver = 0):
     RiverMap = [[0 for k in range(len(heightmap[0]))] for j in range(len(heightmap))]

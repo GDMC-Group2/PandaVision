@@ -5,7 +5,7 @@ from terrian_adaptation import terrain, building_placement, city_planning, surfa
 from Building import hotel
 from tools import getEnv
 import interfaceUtils
-begin_time = time()
+
 
 # import sys
 # x1 = int(sys.argv[1])
@@ -15,20 +15,32 @@ begin_time = time()
 # area = (x1, z1, x2, z2)
 # print(f"Build area is at position {area[0]}, {area[1]} with size {area[2]}, {area[3]}")
 
-area = (0, 0, 300, 300)
-ED = Editor(buffering=False)
 
-# print("Build area")
-# Here we read start and end coordinates of our build area
-BUILD_AREA = ED.getBuildArea()  # BUILDAREA
-
-# print("world slice")
-WORLDSLICE = ED.loadWorldSlice(BUILD_AREA.toRect(), cache=True)  # this takes a while
-# print("heights")
-heights = WORLDSLICE.heightmaps["MOTION_BLOCKING_NO_LEAVES"]
 
 def main():
-    area = (0, 0, 300, 300)
+    #sとgの仕様
+    #sが原点
+    #gがベクトル値
+    ED = Editor(buffering=True)
+    #s=start x,y,z g=goal x,y,z
+    #s=[-292,-60,-49]
+    #g=[~111,255,~104]
+    #command=f"setbuildarea {s[0]} {s[1]} {s[2]} {g[0]} {g[1]} {g[2]}"
+    #ED.runCommand(command)
+
+    # print("Build area")
+    # Here we read start and end coordinates of our build area
+    BUILD_AREA = ED.getBuildArea()  # BUILDAREA
+    # print("world slice")
+    WORLDSLICE = ED.loadWorldSlice(BUILD_AREA.toRect(), cache=True)  # this takes a while
+    worldSlice = WORLDSLICE
+    print(worldSlice)
+    
+
+    # print("heights")
+    #heights = WORLDSLICE.heightmaps["MOTION_BLOCKING_NO_LEAVES"]
+    area = [worldSlice.rect.offset[0],worldSlice.rect.offset[1],worldSlice.rect.size[0],worldSlice.rect.size[1]]
+
     print(f"Build area is at position {area[0]}, {area[1]} with size {area[2]}, {area[3]}")
     command="gamerule doMobSpawning false"
     ED.runCommand(command)
@@ -41,38 +53,38 @@ def main():
         new_area.append(area[3] - area[3] // 5 * 2)
         area = new_area
     # ------------------------------------
-    heightmap = WORLDSLICE.heightmaps["MOTION_BLOCKING_NO_LEAVES"]
-    heightmap, env, flag = getEnv.calcGoodHeightmap(WORLDSLICE)
+
+    
+
+
+    #heightmap = WORLDSLICE.heightmaps["MOTION_BLOCKING_NO_LEAVES"]
+
+    heightmap, env, flag = getEnv.calcGoodHeightmap(worldSlice)
     if flag:
         search_area = [(0, 0, 300, 300)]
+        print("flag!")
     else:
-        search_BuildArea = SBA.SearchBuildArea(area=area, heightmap=heightmap, env=env, WORLDSLICE=WORLDSLICE)
+        search_BuildArea = SBA.SearchBuildArea(area=area, heightmap=heightmap, env=env, worldSlice=worldSlice)
         search_area = search_BuildArea.output() # tuple in list
+        print(search_area)
     isMaxArea = 1
     for Area in search_area:
         HM_Area = heightmap[Area[0]:Area[0]+Area[2],Area[1]:Area[1]+Area[3]]
-        ActualArea = (area[0]+Area[0],area[1]+Area[1],Area[2],Area[3])
+        ActualArea = [area[0]+Area[0],area[1]+Area[1],Area[2],Area[3]]
         surface_reconstruction.RemoveTrees(HM_Area, ActualArea)
         height = terrain.setSameHeight(HM_Area, ActualArea, env)
-        buildingMap, buildingDict = city_planning.executeCityPlanning(Area, isMaxArea)
+        buildingMap, buildingDict = city_planning.executeCityPlanning(Area,env, isMaxArea)
         building_placement.placeCity(buildingMap, buildingDict, ActualArea, height, isMaxArea)
         if isMaxArea == 1:
             x = ActualArea[0] + int(ActualArea[2]/2)
             y = height
             z = ActualArea[1] + int(ActualArea[3]/2)
         isMaxArea = 0
-    if 'x' in locals() and 'y' in locals() and 'z' in locals():
-        hotel.hotel3(x,y,z)
+    #if 'x' in locals() and 'y' in locals() and 'z' in locals():
+        #hotel.hotel3(x,y,z)
+# setbuildarea 0 40 0 400 400 400
 
+begin_time = time()
+main()
 end_time = time()
-if __name__ == "__main__":
-    print(1)
-    begin_time = time()
-    print(1)
-    main()
-    end_time = time()
-    print("run time:", end_time-begin_time)
-
 print("run time:", end_time-begin_time)
-
-# setbuildarea 0 40 0 400 100 400

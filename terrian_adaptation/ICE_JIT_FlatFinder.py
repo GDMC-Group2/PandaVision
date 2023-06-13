@@ -24,8 +24,8 @@ class FlatFinder:
         self.candidate_Areas_list = []
         self.checked_list = []
         self.uncheck_list = []
-        self.mergeArea = np.zeros(self.h_shape, dtype=np.int)
-        self.mergeArea_meanHeight = np.zeros(self.h_shape, dtype=np.int)
+        self.mergeArea = np.zeros(self.h_shape, dtype=int)
+        self.mergeArea_meanHeight = np.zeros(self.h_shape, dtype=int)
         self.pos = [[-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1],
                     [-1, 1]]  # search in the 4 directions of the cell S-W-N-E
         self.splitArea()

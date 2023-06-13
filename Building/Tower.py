@@ -613,7 +613,6 @@ def buildTower(x, y, z, level):
     # Panda(x,y,z)
 
 
-buildTower(-350,4,-150,5)
 
 def rectanglesOverlap(r1, r2):
     """Check that r1 and r2 do not overlap."""

@@ -343,5 +343,3 @@ def rectanglesOverlap(r1, r2):
         return False
     else:
         return True
-
-buildFarm(-78,4,-52)

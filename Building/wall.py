@@ -1,7 +1,7 @@
 from gdpc import Editor,Block
 from interfaceUtils import runCommand
 
-editor = Editor(buffering=False)
+editor = Editor(buffering=True)
 
 
 def buildHouse(x, y, z, t_id, w_id,r_id,q_id,p_id):

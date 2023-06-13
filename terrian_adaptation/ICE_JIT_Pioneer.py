@@ -119,8 +119,8 @@ class Pioneer:
         # print self.x1, self.x2
         # print self.z1, self.z2
         count_num = 0
-        self.width = self.z2 - self.z1 + 1
-        self.height = self.x2 - self.x1 + 1
+        self.width = self.x2 - self.x1 + 1
+        self.height = self.z2 - self.z1 + 1
         backup_land = []
         # print self.area_with_border
         for x in range(self.x1, self.x2 + 1):

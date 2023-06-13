@@ -315,17 +315,20 @@ def setSameHeight(heightmap, buildArea, env):
     print('setSameHeight')
     heightlist = [h2 for h1 in heightmap for h2 in h1]
     maxH = Counter(heightlist).most_common(1)[0][0]
+    print(len(heightmap))
+    print(len(heightmap[0]))
     for x in range(len(heightmap)):
         for y in range(len(heightmap[0])):
-            diff = maxH - heightmap[x][y]
-            if diff > 0:
-                for i in range(diff):
-                    # print(buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y)
-                    ED.placeBlock((buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y), Block('grass_block'))
-            elif diff <= 0:
-                for i in range(-diff):
-                    # print(buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y)
-                    ED.placeBlock((buildArea[0]+x, heightmap[x][y]-1-i, buildArea[1]+y), Block('air'))
-                ED.placeBlock((buildArea[0]+x, heightmap[x][y]-1+diff, buildArea[1]+y), Block('grass_block'))
+            if(env[x][y]!=4): #env4=は草,砂,石でないブロック
+                diff = maxH - heightmap[x][y]
+                if diff > 0:
+                    for i in range(diff):
+                        # print(buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y)
+                        ED.placeBlock((buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y), Block('grass_block'))
+                elif diff <= 0:
+                    for i in range(-diff):
+                        # print(buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y)
+                        ED.placeBlock((buildArea[0]+x, heightmap[x][y]-1-i, buildArea[1]+y), Block('air'))
+                    ED.placeBlock((buildArea[0]+x, heightmap[x][y]-1+diff, buildArea[1]+y), Block('grass_block'))
     print('setSameHeight done')
     return maxH

@@ -1556,11 +1556,6 @@ def house1(x,y,z,f):
     elif f=="w":
         house1_w(x,y,z)
 
-house1(-50,4,-200,"n")
-house1(-50,4,-240,"s")
-house1(-50,4,-280,"e")
-house1(-50,4,-320,"w")
-
 
 def rectanglesOverlap(r1, r2):
     """Check that r1 and r2 do not overlap."""

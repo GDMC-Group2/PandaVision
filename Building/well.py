@@ -1,7 +1,7 @@
 from gdpc import Editor, Block, Transform, geometry
 import os
 
-editor = Editor(buffering=False) #Trueだとうごかない
+editor = Editor(buffering=True) #Trueだとうごかない
 
 
 
@@ -40,7 +40,4 @@ def rectanglesOverlap(r1, r2):
         return False
     else:
         return True
-    
 
-
-Wells(-20,4,-200)

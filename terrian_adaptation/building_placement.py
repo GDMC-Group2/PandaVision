@@ -1,7 +1,7 @@
 from Building import hotel, hotel2, house1, house2, house3, Farm, Tower, Pavilion, store, well, wall, river, bridge
 from gdpc import Editor, Block
 
-ED = Editor(buffering=False)
+ED = Editor(buffering=True)
 
 CoverList = [
     'store1_n',
@@ -86,7 +86,7 @@ def placeBuildings(buildingDict, area, height):
         if building == 'pavilion_w':
             Pavilion.buildPavilion(area[0]+location[0]+8, height, area[1]+location[1]+8,'w')
         if building == 'well':
-            well.Well(area[0]+location[0]+1, height, area[1]+location[1]+1)
+            well.Wells(area[0]+location[0]+1, height, area[1]+location[1]+1)
 
 def placeMainRoad(x,y,z,l,f):
     y = y-1
@@ -115,7 +115,7 @@ def setSurface(buildingMap, area, height, BlockType):
     for x in range(area[2]):
         for y in range(area[3]):
             if type(buildingMap[x][y]) == int or buildingMap[x][y] in CoverList:
-                ED.placeBlock(area[0]+x,height-1,area[1]+y,Block(BlockType))
+                ED.placeBlock((area[0]+x,height-1,area[1]+y),Block(BlockType))
 
 def placeCity(buildingMap, buildingDict, area, height, isMaxArea = 0):
     wall_width = 11

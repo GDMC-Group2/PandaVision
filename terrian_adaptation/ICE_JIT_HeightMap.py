@@ -14,12 +14,12 @@ class HeightMap:
         self.s_z = start_z
         self.e_x = end_x
         self.e_z = end_z
-        self.water_blocks = np.zeros((self.e_x - self.s_x, self.e_z - self.s_z), dtype=np.int)
+        self.water_blocks = np.zeros((self.e_x - self.s_x, self.e_z - self.s_z), dtype=int)
         # self.aboveSurfaceBlocks = np.array([0, 6, 17, 18, 31, 32, 37, 38, 39, 40, 59, 78, 81, 83, 99,
         #                                     100, 103, 104, 105, 106, 111, 141, 142, 161, 162, 175])
         self.n = self.e_x - self.s_x - 1
         self.height_map = heightmap
-        # self.height_map2 = np.zeros((self.e_x - self.s_x, self.e_z - self.s_z), dtype=np.int)
+        # self.height_map2 = np.zeros((self.e_x - self.s_x, self.e_z - self.s_z), dtype=int)
         self.height_map_gradient_X = None
         self.height_map_gradient_Z = None
         self.height_map_norm = None

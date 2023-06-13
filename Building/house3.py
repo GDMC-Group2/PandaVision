@@ -1578,13 +1578,6 @@ def house3(x,y,z,f):
     elif f=="w":
         house3_w(x,y,z)
 
-#house3(-180,4,-115,"s")
-
-#house3(-180,4,-155,"n")
-
-#house3(-180,4,-195,"e")
-
-house3(-180,4,-235,"w")
 
 def rectanglesOverlap(r1, r2):
     """Check that r1 and r2 do not overlap."""

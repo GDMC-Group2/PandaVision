@@ -1427,11 +1427,6 @@ def store3(x,y,z,f):
     elif f=="e":
         store3_e(x,y,z)
 
-store1(-250,4,-145,"n")
-store1(-250,4,-175,"s")
-store1(-250,4,-205,"w")
-store1(-250,4,-235,"e")
-
 
 def rectanglesOverlap(r1, r2):
     """Check that r1 and r2 do not overlap."""

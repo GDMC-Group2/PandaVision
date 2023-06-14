@@ -1,4 +1,4 @@
-from Building import hotel, hotel2, house1, house2, house3, Farm, Tower, Pavilion, store, well, wall, river, bridge
+from Building import hotel, hotel2, house1, house2, house3, Farm, Tower, Pavilion, store, well, wall, river, bridge,blacksmith,honey_farm
 from gdpc import Editor, Block
 
 ED = Editor(buffering=True)
@@ -87,7 +87,18 @@ def placeBuildings(buildingDict, area, height):
             Pavilion.buildPavilion(area[0]+location[0]+8, height, area[1]+location[1]+8,'w')
         if building == 'well':
             well.Wells(area[0]+location[0]+1, height, area[1]+location[1]+1)
-
+        if building == 'blacksmith_n':
+            blacksmith.blacksmith_main(area[0]+location[0]+9, height, area[1]+location[1]+7,'n')
+        if building == 'blacksmith_s':
+            blacksmith.blacksmith_main(area[0]+location[0], height, area[1]+location[1],'s')
+        if building == 'blacksmith_e':
+            blacksmith.blacksmith_main(area[0]+location[0]+7, height, area[1]+location[1],'e')
+        if building == 'blacksmith_w':
+            blacksmith.blacksmith_main(area[0]+location[0], height, area[1]+location[1]+9,'w')
+        if building == 'honey_farm_n':
+            honey_farm.honey_farm(area[0]+location[0],height,area[1]+location[1],'n')
+        if building == 'honey_farm_e':
+            honey_farm.honey_farm(area[0]+location[0],height,area[1]+location[1],'e')
 def placeMainRoad(x,y,z,l,f):
     y = y-1
     if f == 'x':
@@ -124,6 +135,7 @@ def placeCity(buildingMap, buildingDict, area, height, isMaxArea = 0):
     buildArea = x_len*y_len
     x_middle = int(x_len/2)
     y_middle = int(y_len/2)
+    print(buildingDict)
     if isMaxArea == 1:
         if buildArea >= 60000 and x_len >= 250 and y_len >= 250:
             x_road = int((x_middle-44-wall_width)/2)

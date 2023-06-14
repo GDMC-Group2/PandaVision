@@ -60,6 +60,12 @@ def main():
     #heightmap = WORLDSLICE.heightmaps["MOTION_BLOCKING_NO_LEAVES"]
 
     heightmap, env, flag = getEnv.calcGoodHeightmap(worldSlice)
+    #test用 先に木を切ってしまう場合用
+    #surface_reconstruction.RemoveTrees(heightmap,area)    
+    #ED.updateWorldSlice()
+    #heightmap, env, flag = getEnv.calcGoodHeightmap(worldSlice)
+    #test完了
+
     if flag:
         search_area = [(0, 0, 300, 300)]
         print("flag!")
@@ -73,7 +79,7 @@ def main():
         ActualArea = [area[0]+Area[0],area[1]+Area[1],Area[2],Area[3]]
         surface_reconstruction.RemoveTrees(HM_Area, ActualArea)
         height = terrain.setSameHeight(HM_Area, ActualArea, env)
-        buildingMap, buildingDict = city_planning.executeCityPlanning(Area,env, isMaxArea)
+        buildingMap, buildingDict = city_planning.executeCityPlanning(Area,isMaxArea)
         building_placement.placeCity(buildingMap, buildingDict, ActualArea, height, isMaxArea)
         if isMaxArea == 1:
             x = ActualArea[0] + int(ActualArea[2]/2)

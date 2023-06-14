@@ -3,6 +3,7 @@ from collections import Counter
 import sys
 sys.setrecursionlimit(65536)
 from gdpc import Editor, Block
+from time import *
 
 ED = Editor(buffering=True)
 
@@ -313,22 +314,23 @@ def executeFF(heightMap, buildArea, env, minimumArea, exclusion = 0, ClearMounta
 
 def setSameHeight(heightmap, buildArea, env):
     print('setSameHeight')
+    begin_time=time()
     heightlist = [h2 for h1 in heightmap for h2 in h1]
     maxH = Counter(heightlist).most_common(1)[0][0]
-    print(len(heightmap))
-    print(len(heightmap[0]))
     for x in range(len(heightmap)):
         for y in range(len(heightmap[0])):
-            if(env[x][y]!=4): #env4=は草,砂,石でないブロック
-                diff = maxH - heightmap[x][y]
-                if diff > 0:
-                    for i in range(diff):
-                        # print(buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y)
-                        ED.placeBlock((buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y), Block('grass_block'))
-                elif diff <= 0:
-                    for i in range(-diff):
-                        # print(buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y)
-                        ED.placeBlock((buildArea[0]+x, heightmap[x][y]-1-i, buildArea[1]+y), Block('air'))
-                    ED.placeBlock((buildArea[0]+x, heightmap[x][y]-1+diff, buildArea[1]+y), Block('grass_block'))
+            diff = maxH - heightmap[x][y]
+            if diff > 0:
+                for i in range(diff):
+                    # print(buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y)
+                    ED.placeBlock((buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y), Block('grass_block'))
+            elif diff <= 0:
+                for i in range(-diff):
+                    # print(buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y)
+                    ED.placeBlock((buildArea[0]+x, heightmap[x][y]-1-i, buildArea[1]+y), Block('air'))
+                ED.placeBlock((buildArea[0]+x, heightmap[x][y]-1+diff, buildArea[1]+y), Block('grass_block'))
+
+    end_time=time()
     print('setSameHeight done')
+    print("time:",end_time-begin_time)
     return maxH

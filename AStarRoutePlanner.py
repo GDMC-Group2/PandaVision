@@ -130,17 +130,17 @@ class Maze:
                             break
                     if not is_wall:
                         if is_saidRightWall: 
-                                movable_locations.append(
-                                    Location(row=location.row-repeat_num , column=location.column, direction=1))
-                                movable_locations.append(
-                                    Location(row=location.row-repeat_num-1 , column=location.column+1, direction=7))
-                                break
+                            movable_locations.append(
+                                Location(row=location.row-repeat_num , column=location.column, direction=1))
+                            movable_locations.append(
+                                Location(row=location.row-repeat_num-1 , column=location.column+1, direction=7))
+                            break
                         if is_saidLeftWall: 
-                                movable_locations.append(
-                                    Location(row=location.row-repeat_num , column=location.column, direction=1))
-                                movable_locations.append(
-                                    Location(row=location.row-repeat_num-1 , column=location.column-1, direction=5))
-                                break
+                            movable_locations.append(
+                                Location(row=location.row-repeat_num , column=location.column, direction=1))
+                            movable_locations.append(
+                                Location(row=location.row-repeat_num-1 , column=location.column-1, direction=5))
+                            break
                         else:
                             break
                         repeat_num+=1

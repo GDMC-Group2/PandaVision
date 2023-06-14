@@ -1,4 +1,5 @@
 import seaborn as sns
+from time import *
 from pyclustering.cluster import gmeans
 import numpy as np
 import itertools
@@ -22,12 +23,14 @@ def fit(X, pltshow=1):
     if len(X) == 0:
         print('no clusters')
         return [], [], [], []
+    b_time=time()
     gmeans_instance = gmeans.gmeans(data=X, k_max=maxnum).process()
-
     clusters = gmeans_instance.get_clusters()
     centers = gmeans_instance.get_centers()
     count_clusters = len(clusters)
+    e_time=time()
     print('old_centers', count_clusters)
+    print("old_centers time",e_time-b_time)
     for i in range(count_clusters-1):
         if len(clusters[i]) == 0:
             continue

@@ -5,6 +5,7 @@ from terrian_adaptation import terrain, building_placement, city_planning, surfa
 from Building import hotel
 from tools import getEnv
 import interfaceUtils
+from basement import Basement as bs
 
 
 # import sys
@@ -66,6 +67,8 @@ def main():
     #heightmap, env, flag = getEnv.calcGoodHeightmap(worldSlice)
     #test完了
 
+    bs(area[0]+area[2]//2, heightmap[area[2]//2][area[3]//2], area[1]+area[3]//2)
+    
     if flag:
         search_area = [(0, 0, 300, 300)]
         print("flag!")
@@ -79,16 +82,19 @@ def main():
         ActualArea = [area[0]+Area[0],area[1]+Area[1],Area[2],Area[3]]
         surface_reconstruction.RemoveTrees(HM_Area, ActualArea)
         height = terrain.setSameHeight(HM_Area, ActualArea, env)
+        #Area
+
         buildingMap, buildingDict = city_planning.executeCityPlanning(Area,isMaxArea)
-        building_placement.placeCity(buildingMap, buildingDict, ActualArea, height, isMaxArea)
+        building_placement.placeCity(buildingMap, buildingDict, ActualArea, height,isMaxArea)
         if isMaxArea == 1:
             x = ActualArea[0] + int(ActualArea[2]/2)
             y = height
             z = ActualArea[1] + int(ActualArea[3]/2)
         isMaxArea = 0
-    #if 'x' in locals() and 'y' in locals() and 'z' in locals():
-        #hotel.hotel3(x,y,z)
-# setbuildarea 0 40 0 400 100 400
+    if 'x' in locals() and 'y' in locals() and 'z' in locals():
+        hotel.hotel3(x,y,z)
+# setbuildarea -500 40 -500 500 100 500
+# setbuildarea 0 -70 0 200 200 200
 
 begin_time = time()
 main()

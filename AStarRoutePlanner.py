@@ -7,8 +7,7 @@ from time import *
 
 
 class Location:
-
-    def __init__(self, row: int, column: int, direction: int) -> None:
+    def __init__(self, row: int, column: int) -> None:
         """
         迷路のグリッドの位置情報単体を扱うクラス。
 
@@ -23,7 +22,6 @@ class Location:
         """
         self.row: int = row
         self.column: int = column
-        self.direction: int = direction
 
 
 class Maze:
@@ -69,7 +67,7 @@ class Maze:
             return True
         return False
 
-    def get_movable_locations(self,goal_loc:Location,location: Location) -> List[Location]:
+    def get_movable_locations(self, location: Location) -> List[Location]:
         """
         指定された位置から、移動が可能な位置のリストを取得する。
 
@@ -86,244 +84,59 @@ class Maze:
         if len(self.movable_locations_2d_list[location.row][location.column]) == 0:
             movable_locations: List[Location] = []
             # 下に移動可能かどうかの判定処理。
-            repeat_num=1
-            while(True):
-                if location.row + repeat_num < self._ROW_NUM and location.direction==0 and location.row+repeat_num>= goal_loc.row:
-                    is_wall: bool = True if self.area_map[location.row + repeat_num][location.column] < -1 else False
-                    is_saidRightWall: bool = True if self.area_map[location.row+repeat_num][location.column +1] < -1 else False
-                    is_saidLeftWall: bool = True if self.area_map[location.row+repeat_num][location.column - 1] < -1 else False
-                    if (location.column==goal_loc.column and location.row+repeat_num==goal_loc.row):
-                        movable_locations.append(
-                                Location(row=location.row+repeat_num , column=location.column, direction=0))
-                        break
-                    if not is_wall:
-                        if is_saidRightWall: 
-                            movable_locations.append(
-                                Location(row=location.row+repeat_num , column=location.column, direction=0))
-                            movable_locations.append(
-                                Location(row=location.row+repeat_num+1 , column=location.column+1, direction=6))
-                            break
-                        if is_saidLeftWall: 
-                            movable_locations.append(
-                                Location(row=location.row+repeat_num , column=location.column, direction=0))
-                            movable_locations.append(
-                                Location(row=location.row+repeat_num+1 , column=location.column-1, direction=4))
-                            break
-                    else:
-                        break
-                    repeat_num+=1
-                else:
-                    break
-
-                    
+            if location.row + 1 < self._ROW_NUM:
+                is_wall: bool = True if self.area_map[location.row + 1][location.column] < -1 else False
+                if not is_wall:
+                    movable_locations.append(
+                        Location(row=location.row + 1, column=location.column))
 
             # 上に移動可能かどうかの判定処理。
-            repeat_num=1
-            while(True):
-                if location.row - repeat_num >= 0 and location.direction==1 and location.row-repeat_num<= goal_loc.row:
-                    is_wall: bool = True if self.area_map[location.row - 1][location.column] < -1 else False
-                    is_saidRightWall: bool = True if self.area_map[location.row-repeat_num][location.column + 1] < -1 else False
-                    is_saidLeftWall: bool = True if self.area_map[location.row-repeat_num][location.column - 1] < -1 else False
-                    if (location.column==goal_loc.column and location.row-repeat_num==goal_loc.row):
-                            movable_locations.append(
-                                    Location(row=location.row-repeat_num , column=location.column, direction=1))
-                            break
-                    if not is_wall:
-                        if is_saidRightWall: 
-                            movable_locations.append(
-                                Location(row=location.row-repeat_num , column=location.column, direction=1))
-                            movable_locations.append(
-                                Location(row=location.row-repeat_num-1 , column=location.column+1, direction=7))
-                            break
-                        if is_saidLeftWall: 
-                            movable_locations.append(
-                                Location(row=location.row-repeat_num , column=location.column, direction=1))
-                            movable_locations.append(
-                                Location(row=location.row-repeat_num-1 , column=location.column-1, direction=5))
-                            break
-                        else:
-                            break
-                        repeat_num+=1
-                    else:
-                        break
+            if location.row - 1 >= 0:
+                is_wall: bool = True if self.area_map[location.row - 1][location.column] < -1 else False
+                if not is_wall:
+                    movable_locations.append(
+                        Location(row=location.row - 1, column=location.column))
 
             # 右に移動可能かどうかの判定処理。
-            repeat_num=1
-            while(True):
-                if location.column + repeat_num < self._COLUMN_NUM and location.direction==2 and location.column+repeat_num <= goal_loc.column:
-                    is_wall: bool = True if self.area_map[location.row][location.column + repeat_num] < -1 else False
-                    is_saidRightWall: bool = True if self.area_map[location.row+1][location.column+repeat_num] < -1 else False
-                    is_saidLeftWall: bool = True if self.area_map[location.row-1][location.column+repeat_num] < -1 else False
-                    if (location.column==goal_loc.column and location.row-repeat_num==goal_loc.row):
-                            movable_locations.append(
-                                    Location(row=location.row , column=location.column-repeat_num, direction=2))
-                            break
-                    if not is_wall:
-                        if is_saidRightWall: 
-                                movable_locations.append(
-                                    Location(row=location.row , column=location.column+repeat_num, direction=2))
-                                movable_locations.append(
-                                    Location(row=location.row+1 , column=location.column+repeat_num+1, direction=6))
-                                break
-                        if is_saidLeftWall: 
-                                movable_locations.append(
-                                    Location(row=location.row , column=location.column+repeat_num, direction=2))
-                                movable_locations.append(
-                                    Location(row=location.row-1 , column=location.column+repeat_num+1, direction=7))
-                                break
-                        else:
-                            break
-                        repeat_num+=1
-                    else:
-                        break
+            if location.column + 1 < self._COLUMN_NUM:
+                is_wall: bool = True if self.area_map[location.row][location.column + 1] < -1 else False
+                if not is_wall:
+                    movable_locations.append(
+                        Location(row=location.row, column=location.column + 1))
 
             # 左に移動可能かどうかの判定処理。
-            repeat_num=1
-            while(True):
-                if location.column - repeat_num >= 0 and location.direction==3 and location.column-repeat_num >= goal_loc.column:
-                    is_wall: bool = True if self.area_map[location.row][location.column - repeat_num] < -1 else False
-                    is_saidRightWall: bool = True if self.area_map[location.row+1][location.column-repeat_num] < -1 else False
-                    is_saidLeftWall: bool = True if self.area_map[location.row-1][location.column-repeat_num] < -1 else False
-                    if (location.column==goal_loc.column and location.row-repeat_num==goal_loc.row):
-                            movable_locations.append(
-                                    Location(row=location.row , column=location.column-repeat_num, direction=3))
-                            break
-                    if not is_wall:
-                        if is_saidRightWall: 
-                                movable_locations.append(
-                                    Location(row=location.row , column=location.column-repeat_num, direction=3))
-                                movable_locations.append(
-                                    Location(row=location.row-1 , column=location.column-repeat_num-1, direction=5))
-                                break
-                        if is_saidLeftWall: 
-                                movable_locations.append(
-                                    Location(row=location.row , column=location.column-repeat_num, direction=3))
-                                movable_locations.append(
-                                    Location(row=location.row+1 , column=location.column-repeat_num-1, direction=4))
-                                break
-                        else:
-                            break
-                        repeat_num+=1
-                    else:
-                        break
+            if location.column - 1 >= 0:
+                is_wall: bool = True if self.area_map[location.row][location.column - 1] < -1 else False
+                if not is_wall:
+                    movable_locations.append(
+                        Location(row=location.row, column=location.column - 1))
 
             # # 左下
-            repeat_num=1
-            while(True):
-                if location.row + repeat_num < self._ROW_NUM and location.column - repeat_num >= 0 and location.column-repeat_num >= goal_loc.column and location.row+repeat_num<= goal_loc.row and location.direction==4:
-                     is_wall: bool = True if self.area_map[location.row + repeat_num][location.column - repeat_num] < 0 else False
-                     is_saidUpWall: bool = True if self.area_map[location.row+repeat_num-1][location.column-repeat_num] < -1 else False
-                     is_saidRightWall: bool = True if self.area_map[location.row+repeat_num][location.column-repeat_num+1] < -1 else False
-                     if (location.column-repeat_num==goal_loc.column and location.row+repeat_num==goal_loc.row):
-                            movable_locations.append(
-                                    Location(row=location.row+repeat_num , column=location.column-repeat_num, direction=4))
-                            break
-                     if not is_wall:
-                        if is_saidUpWall: 
-                                movable_locations.append(
-                                    Location(row=location.row+repeat_num , column=location.column-repeat_num, direction=4))
-                                movable_locations.append(
-                                    Location(row=location.row+repeat_num-1 , column=location.column-repeat_num-1, direction=5))
-                                break
-                        if is_saidRightWall: 
-                                movable_locations.append(
-                                    Location(row=location.row+repeat_num , column=location.column-repeat_num, direction=4))
-                                movable_locations.append(
-                                    Location(row=location.row+repeat_num+1 , column=location.column-repeat_num+1, direction=6))
-                                break
-                        else:
-                            break
-                        repeat_num+=1
-                else:
-                        break
+            # if location.row + 1 < self._ROW_NUM and location.column - 1 >= 0:
+            #     is_wall: bool = True if self.area_map[location.row + 1][location.column - 1] < 0 else False
+            #     if not is_wall:
+            #         movable_locations.append(
+            #             Location(row=location.row + 1, column=location.column - 1))
             # # 左上
-            repeat_num=1
-            while(True):
-                if location.row - repeat_num < self._ROW_NUM and location.column - repeat_num >= 0 and location.column -repeat_num>=goal_loc.column and location.row-repeat_num<=goal_loc and location.direction==5:
-                   is_wall: bool = True if self.area_map[location.row - repeat_num][location.column - repeat_num] < 0 else False
-                   is_saidDownWall: bool = True if self.area_map[location.row-repeat_num+1][location.column-repeat_num] < -1 else False
-                   is_saidRightWall: bool = True if self.area_map[location.row-repeat_num][location.column-repeat_num+1] < -1 else False
-                   if (location.column-repeat_num==goal_loc.column and location.row-repeat_num==goal_loc.row):
-                                movable_locations.append(
-                                        Location(row=location.row-repeat_num , column=location.column-repeat_num, direction=5))
-                                break
-                   if not is_wall:
-                         if is_saidDownWall: 
-                                movable_locations.append(
-                                    Location(row=location.row-repeat_num , column=location.column-repeat_num, direction=5))
-                                movable_locations.append(
-                                    Location(row=location.row-repeat_num+1 , column=location.column-repeat_num-1, direction=4))
-                                break
-                         if is_saidRightWall: 
-                                movable_locations.append(
-                                    Location(row=location.row-repeat_num , column=location.column-repeat_num, direction=5))
-                                movable_locations.append(
-                                    Location(row=location.row-repeat_num-1 , column=location.column-repeat_num+1, direction=7))
-                                break
-                         else:
-                            break
-                         repeat_num+=1
-                else:
-                        break
+            # if location.row - 1 < self._ROW_NUM and location.column - 1 >= 0:
+            #     is_wall: bool = True if self.area_map[location.row - 1][location.column - 1] < 0 else False
+            #     if not is_wall:
+            #         movable_locations.append(
+            #             Location(row=location.row - 1, column=location.column - 1))
             #
             # # 右下
-            repeat_num=1
-            while(True):
-                if location.row + repeat_num < self._ROW_NUM and location.column + repeat_num >= 0 and location.column + repeat_num<=goal_loc.column and location.row+repeat_num<=goal_loc and location.direction==6:
-                     is_wall: bool = True if self.area_map[location.row + repeat_num][location.column + repeat_num] < 0 else False
-                     is_saidUpWall: bool = True if self.area_map[location.row-repeat_num-1][location.column-repeat_num] < -1 else False
-                     is_saidLeftWall: bool = True if self.area_map[location.row-repeat_num][location.column-repeat_num-1] < -1 else False
-                     if (location.column+repeat_num==goal_loc.column and location.row+repeat_num==goal_loc.row):
-                                movable_locations.append(
-                                        Location(row=location.row+repeat_num , column=location.column+repeat_num, direction=6))
-                                break
-                     if not is_wall:
-                         if is_saidUpWall: 
-                                    movable_locations.append(
-                                        Location(row=location.row+repeat_num , column=location.column+repeat_num, direction=6))
-                                    movable_locations.append(
-                                        Location(row=location.row+repeat_num-1 , column=location.column+repeat_num+1, direction=7))
-                                    break
-                         if is_saidLeftWall: 
-                                    movable_locations.append(
-                                        Location(row=location.row+repeat_num , column=location.column+repeat_num, direction=6))
-                                    movable_locations.append(
-                                        Location(row=location.row+repeat_num-1 , column=location.column+repeat_num-1, direction=5))
-                                    break
-                         else:
-                                break
-                         repeat_num+=1
-                     else:
-                            break
-            
+            # if location.row + 1 < self._ROW_NUM and location.column + 1 >= 0:
+            #     is_wall: bool = True if self.area_map[location.row + 1][location.column + 1] < 0 else False
+            #     if not is_wall:
+            #         movable_locations.append(
+            #             Location(row=location.row + 1, column=location.column + 1))
+            #
             # # 右上
-            repeat_num=1
-            while(True):
-                if location.row - repeat_num < self._ROW_NUM and location.column + repeat_num >= 0 and location.column + repeat_num<=goal_loc.column and location.row-repeat_num>=goal_loc and location.direction==7:
-                     is_wall: bool = True if self.area_map[location.row - repeat_num][location.column + repeat_num] < 0 else False
-                     is_saidDownWall: bool = True if self.area_map[location.row-repeat_num+1][location.column-repeat_num] < -1 else False
-                     is_saidLeftWall: bool = True if self.area_map[location.row-repeat_num][location.column-repeat_num-1] < -1 else False
-                     if (location.column+repeat_num==goal_loc.column and location.row-repeat_num==goal_loc.row):
-                                movable_locations.append(
-                                        Location(row=location.row-repeat_num , column=location.column+repeat_num, direction=7))
-                     if not is_wall:
-                         if is_saidDownWall: 
-                                    movable_locations.append(
-                                        Location(row=location.row-repeat_num , column=location.column+repeat_num, direction=7))
-                                    movable_locations.append(
-                                        Location(row=location.row-repeat_num+1 , column=location.column+repeat_num+1, direction=6))
-                                    break
-                         if is_saidLeftWall: 
-                                    movable_locations.append(
-                                        Location(row=location.row-repeat_num , column=location.column+repeat_num, direction=7))
-                                    movable_locations.append(
-                                        Location(row=location.row-repeat_num-1 , column=location.column+repeat_num-1, direction=6))
-                                    break
-                         else:
-                                break
-                         repeat_num+=1
-                     else:
-                            break
+            # if location.row - 1 < self._ROW_NUM and location.column + 1 >= 0:
+            #     is_wall: bool = True if self.area_map[location.row - 1][location.column + 1] < 0 else False
+            #     if not is_wall:
+            #         movable_locations.append(
+            #             Location(row=location.row - 1, column=location.column + 1))
 
             self.movable_locations_2d_list[location.row][location.column] = movable_locations
             return movable_locations
@@ -424,31 +237,8 @@ def get_path_from_goal_node(goal_node: Node):
         path.append(node.location)
     path.reverse()
     path_list = []
-    for nowNode in range(len(path)):
-        if path[nowNode].direction==0:
-            for repeat_num in range(abs(path[nowNode].row - path[nowNode+1].row)):
-                path_list.append((path[nowNode].row+repeat_num, path[nowNode].column))
-        if path[nowNode].direction==1:
-            for repeat_num in range(abs(path[nowNode].row - path[nowNode+1].row)):
-                path_list.append((path[nowNode].row-repeat_num, path[nowNode].column))
-        if path[nowNode].direction==2:
-            for repeat_num in range(abs(path[nowNode].column - path[nowNode+1].column)):
-                path_list.append((path[nowNode].row, path[nowNode].column+repeat_num))
-        if path[nowNode].direction==3:
-            for repeat_num in range(abs(path[nowNode].column - path[nowNode+1].column)):
-                path_list.append((path[nowNode].row, path[nowNode].column-repeat_num))
-        if path[nowNode].direction==4:
-            for repeat_num in range(abs(path[nowNode].column - path[nowNode+1].column)):
-                path_list.append((path[nowNode].row+repeat_num, path[nowNode].column-repeat_num))
-        if path[nowNode].direction==5:
-            for repeat_num in range(abs(path[nowNode].column - path[nowNode+1].column)):
-                path_list.append((path[nowNode].row-repeat_num, path[nowNode].column-repeat_num))
-        if path[nowNode].direction==6:
-            for repeat_num in range(abs(path[nowNode].column - path[nowNode+1].column)):
-                path_list.append((path[nowNode].row+repeat_num, path[nowNode].column+repeat_num))
-        if path[nowNode].direction==7:
-            for repeat_num in range(abs(path[nowNode].column - path[nowNode+1].column)):
-                path_list.append((path[nowNode].row-repeat_num, path[nowNode].column+repeat_num))
+    for one_loc in path:
+        path_list.append((one_loc.row, one_loc.column))
     return path_list
 
 
@@ -494,14 +284,14 @@ class PriorityQueue:
         """
         return heapq.heappop(self._container)
 
+
 def astar(
         maze,
         init_loc: Location,
         is_goal_loc_method: Callable[[Location], bool],
         get_movable_locations_method: Callable[[Location], List[Location]],
         hueristic_method: Callable[[Location], int],
-        limit_time,
-        goal_loc
+        limit_time
 ) -> Optional[Node]:
     """
     A*アルゴリズムによる探索処理を行う。
@@ -545,7 +335,7 @@ def astar(
         if is_goal_loc_method(current_loc):
             return current_node
 
-        movable_locations = get_movable_locations_method(goal_loc,current_loc)
+        movable_locations = get_movable_locations_method(current_loc)
         for movable_location in movable_locations:
             key = (current_loc.row, current_loc.column, movable_location.row, movable_location.column)
             if key in maze.height_dict:
@@ -592,8 +382,7 @@ def run(maze):
         is_goal_loc_method=maze.is_goal_loc,
         get_movable_locations_method=maze.get_movable_locations,
         hueristic_method=maze.get_manhattan_distance,
-        limit_time=20.0,
-        goal_loc=maze.is_goal_loc
+        limit_time=30.0
     )
     if goal_node is None:
         print('time over or 出口が算出できない迷路です。')

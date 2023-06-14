@@ -7,7 +7,6 @@ from time import *
 
 
 class Location:
-
     def __init__(self, row: int, column: int) -> None:
         """
         迷路のグリッドの位置情報単体を扱うクラス。
@@ -383,7 +382,7 @@ def run(maze):
         is_goal_loc_method=maze.is_goal_loc,
         get_movable_locations_method=maze.get_movable_locations,
         hueristic_method=maze.get_manhattan_distance,
-        limit_time=20.0
+        limit_time=30.0
     )
     if goal_node is None:
         print('time over or 出口が算出できない迷路です。')

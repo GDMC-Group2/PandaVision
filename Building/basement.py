@@ -1,7 +1,7 @@
 from interfaceUtils import runCommand
 from gdpc import Editor, Block, Transform, geometry
 
-editor = Editor()
+editor = Editor(buffering=True)
 
 def air(x,y,z,q_id):
     for xx in range(34):

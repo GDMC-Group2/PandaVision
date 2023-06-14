@@ -583,7 +583,7 @@ def Bamboo(x,y,z,q_id,w_id,e_id):
         bamboo(x-15+random.randint(0,30),y,z-15+random.randint(0,7))
         bamboo(x-15+random.randint(0,30),y,z+15-random.randint(0,7))
     def bamboo_sapling(x,y,z):
-        p = editor.getBlock(x,y,z)
+        p = editor.getBlock((x,y,z))
         if p is None:
             editor.placeBlock((x,y,z),Block(e_id))
     for i in range(15):
@@ -593,7 +593,7 @@ def Bamboo(x,y,z,q_id,w_id,e_id):
         bamboo_sapling(x-15+random.randint(0,30),y,z+15-random.randint(0,7))
 def Panda(x,y,z):
     def panda(x,y,z):
-        p = editor.getBlock(x,y,z)
+        p = editor.getBlock((x,y,z))
         if p is None:
             command = f"summon panda {x} {y} {z}"
             runCommand(command)
@@ -609,8 +609,8 @@ def buildTower(x, y, z, level):
     for i in range(level):
         buildTowerFloor(x, y+2+7*i, z, i)
     buildTowerTop(x, y+1+7*level, z)
-    # Bamboo(x,y,z,"grass_block","bamboo","bamboo_sapling")
-    # Panda(x,y,z)
+    Bamboo(x,y,z,"grass_block","bamboo","bamboo_sapling")
+    Panda(x,y,z)
 
 
 

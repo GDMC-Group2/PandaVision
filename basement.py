@@ -435,3 +435,5 @@ def Basement(x,y,z):
     add(x,y-20,z,"stripped_dark_oak_log","glass","water","wheat")
     well(x,y-20,z,"stone_bricks","water","mossy_stone_brick_stairs","mossy_stone_brick_wall","jungle_fence","spruce_trapdoor","spruce_slab","grindstone")
 
+
+# Basement(0, 100, 0)

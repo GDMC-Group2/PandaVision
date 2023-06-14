@@ -9,6 +9,7 @@ from terrian_adaptation import ICE_JIT_FlatFinder as ice_jit_F
 from terrian_adaptation import ICE_JIT_BorderAreaFinder as ice_jit_S
 from terrian_adaptation import ICE_JIT_GravityFinder as G
 from terrian_adaptation import ICE_JIT_Pioneer as P
+import road_generator as RG
 
 # print("Editor")
 # Here we construct an Editor object
@@ -79,6 +80,7 @@ class SearchBuildArea():
         print("Decide Areas:", end_time - begin_time)
         if mid_pos != []:
             begin_time = time()
+            RoadGene = RG.RoadGenerator(self.area, self.heightmap, new_array, area_with_border)
             maze = AS.make_maze(self.heightmap, area_with_border)
             m = mid_pos.copy()
             for one in centers_ncd:
@@ -88,10 +90,13 @@ class SearchBuildArea():
                 print('-' * 30)
                 start = (int(centers_sorted[i][0]), int(centers_sorted[i][1]))
                 end0 = (int(centers_sorted[i + 1][0]), int(centers_sorted[i + 1][1]))
-                print("r_start:", start[0] + self.area[0], start[1] + self.area[1])
-                print("r_end:", end0[0] + self.area[0], end0[1] + self.area[1])
-                AS.set_star_end(maze, start, end0)
+                r_start, r_end = RoadGene.find_real_start_end(start, end0)
+                print("r_start:", r_start[0] + self.area[0], r_start[1] + self.area[1])
+                print("r_end:", r_end[0] + self.area[0], r_end[1] + self.area[1])
+                AS.set_star_end(maze, r_start, r_end)
                 path_list = AS.run(maze)
+                # print("path_list:", path_list)
+                RoadGene.generate(path_list)
             end_time = time()
             print("Generate Roads:", end_time - begin_time)
         return DecideArea_sorted
@@ -139,7 +144,7 @@ class SearchBuildArea():
                 if one_cluster[1] > z_max:
                     z_max = one_cluster[1]
             a.append([x_min, x_max, z_min, z_max])
-
+            f_area, new_array = self.ChangeArray(clusters, f_area, new_array)
 
         from random import randrange
         # Panda invade Settlement
@@ -275,13 +280,13 @@ class SearchBuildArea():
         return centers, centers_ncd
     
     # Local Outlier Factor and detect the size of built Settlement
-    # def ChangeArray(self, clusters, f_area, new_array):
-    #     # 既存集落を保存
-    #     for cluster in clusters:
-    #         for pos in cluster:
-    #             f_area[pos[0], pos[1]] = -7 # same as -7
-    #             new_array[pos[0], pos[1]] = 1
-    #     return f_area, new_array
+    def ChangeArray(self, clusters, f_area, new_array):
+        # 既存集落を保存
+        for cluster in clusters:
+            for pos in cluster:
+                f_area[pos[0], pos[1]] = -7 # same as -7
+                new_array[pos[0], pos[1]] = 1
+        return f_area, new_array
 
 
 # def main():

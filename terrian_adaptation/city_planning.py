@@ -75,12 +75,12 @@ def decideHouseArea(area, exclusion):
     areaDict[1] = (wall_width, wall_width, x_len-wall_width, y_len-wall_width)
     return areaMap, areaDict
 
-def decideBuildings(num, area, buildingMap, buildingDict, buildingType, exclusion, env,intervalDistance = 2):
+def decideBuildings(num, area, buildingMap, buildingDict, buildingType, exclusion,intervalDistance = 2):
     BuildingRemainNum = deepcopy(BuildingMaxNum)
     BuildingSizeList = BuildingSizeLists[buildingType]
     for x in range(area[0] + exclusion, (area[2] - exclusion)):
         for y in range(area[1] + exclusion, (area[3] - exclusion)):
-            if buildingMap[x][y] == num and env[x][y] !=4:
+            if buildingMap[x][y]:
                 buildingList = []
                 for building, size in BuildingSizeList.items():
                     for name in BuildingRemainNum:
@@ -105,12 +105,8 @@ def decideBuildings(num, area, buildingMap, buildingDict, buildingType, exclusio
                                     buildingMap[x+i][y+j] = -1
     return buildingMap, buildingDict
 
-    #def existing_building(env):
-        ##envからの情報で,4が出る(すでに建築物がある)エリアをメモして,処理から弾く
-    #(env==4):
 
-
-def executeCityPlanning(area, env,isMaxArea = 0, exclusion = 2):
+def executeCityPlanning(area,isMaxArea = 0, exclusion = 2):
     x_len = area[2]
     y_len = area[3]
     buildArea = x_len*y_len
@@ -119,11 +115,11 @@ def executeCityPlanning(area, env,isMaxArea = 0, exclusion = 2):
             buildingMap, areaDict = decideAreas(area, exclusion)
             buildingDict = {}
             for num, buildingArea in areaDict.items():
-                buildingMap, buildingDict = decideBuildings(num, buildingArea, buildingMap, buildingDict, buildingTypes[num-1], exclusion,env)
+                buildingMap, buildingDict = decideBuildings(num, buildingArea, buildingMap, buildingDict, buildingTypes[num-1], exclusion)
         elif buildArea > 16900 and x_len > 130 and y_len > 130:
             buildingDict = {}
             buildingMap, areaDict = decideHouseArea(area, exclusion)
-            buildingMap, buildingDict = decideBuildings(1, areaDict[1], buildingMap, buildingDict, 1, exclusion,env)
+            buildingMap, buildingDict = decideBuildings(1, areaDict[1], buildingMap, buildingDict, 1, exclusion)
         else:
             return [[0 for k in range(area[3])] for j in range(area[2])], {}
     else:
@@ -131,7 +127,7 @@ def executeCityPlanning(area, env,isMaxArea = 0, exclusion = 2):
         buildingMap = [[1 for k in range(y_len)] for j in range(x_len)]
         buildingDict = {}
         if buildArea >= 1000:
-            buildingMap, buildingDict = decideBuildings(1, buildingArea, buildingMap, buildingDict, 0, exclusion,env)
+            buildingMap, buildingDict = decideBuildings(1, buildingArea, buildingMap, buildingDict, 0, exclusion)
         else:
-            buildingMap, buildingDict = decideBuildings(1, buildingArea, buildingMap, buildingDict, 14, exclusion,env)
+            buildingMap, buildingDict = decideBuildings(1, buildingArea, buildingMap, buildingDict, 14, exclusion)
     return buildingMap, buildingDict

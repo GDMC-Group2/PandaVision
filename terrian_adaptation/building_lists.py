@@ -30,7 +30,9 @@ BuildingSizeLists = [
     'pavilion_e':(18,17),
     'pavilion_w':(18,17),
     'well':(3,3),
-    'farm':(43,43)
+    'farm':(43,43),
+    'honey_farm_n':(11,15),
+    'honey_farm_e':(15,11)
  },
  {#1
     'house1_n':(21,16),
@@ -44,7 +46,9 @@ BuildingSizeLists = [
     'house3_n':(20,23),
     'house3_s':(20,23),
     'house3_e':(23,20),
-    'house3_w':(23,20)
+    'house3_w':(23,20),
+    'honey_farm_n':(11,15), #test用
+    'honey_farm_e':(15,11)
  },
  {#2
     'house1_n':(21,16),
@@ -81,7 +85,9 @@ BuildingSizeLists = [
  },
  {#9
     'farm':(43,43),
-    'well':(3,3)
+    'well':(3,3),
+    'honey_farm_n':(11,15),
+    'honey_farm_e':(15,11)
  },
  {#10
     'store1_n':(19,12),
@@ -131,5 +137,6 @@ BuildingMaxNum = {
     'house3':20,
     'pavilion':1,
     'store':15,
-    'well':1
+    'well':1,
+    'honey_farm':4
  }

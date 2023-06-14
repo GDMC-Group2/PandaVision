@@ -6,7 +6,7 @@ from Building import hotel
 from tools import getEnv
 import interfaceUtils
 from basement import Basement as bs
-
+from air import Air as ar
 
 # import sys
 # x1 = int(sys.argv[1])
@@ -67,6 +67,7 @@ def main():
     #heightmap, env, flag = getEnv.calcGoodHeightmap(worldSlice)
     #test完了
 
+    ar(area[0]+area[2]//2, heightmap[area[2]//2][area[3]//2], area[1]+area[3]//2)
     bs(area[0]+area[2]//2, heightmap[area[2]//2][area[3]//2], area[1]+area[3]//2)
     
     if flag:
@@ -92,7 +93,7 @@ def main():
     #if 'x' in locals() and 'y' in locals() and 'z' in locals():
         #hotel.hotel3(x,y,z)
 # setbuildarea -500 40 -500 500 100 500
-# setbuildarea 0 -70 0 200 200 200
+# setbuildarea 0 40 0 200 200 200
 
 begin_time = time()
 main()

@@ -36,7 +36,7 @@ BuildingSizeLists = [
     'well':(3,3),
     'farm':(43,43),
     'honey_farm_n':(15,11),
-    'honey_farm_e':(11,11)
+    'honey_farm_e':(11,15)
  },
  {#1
     'house1_n':(21,16),

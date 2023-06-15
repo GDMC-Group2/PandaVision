@@ -312,7 +312,7 @@ def executeFF(heightMap, buildArea, env, minimumArea, exclusion = 0, ClearMounta
     alterDict, alterHeightDict = floodFill(heightMap, minimumArea, exclusion)
     editTerrainFF(alterDict, alterHeightDict, heightMap, buildArea, env, ClearMountain)
 
-def setSameHeight(heightmap, buildArea, env):
+def setSameHeight(heightmap, buildArea, block_id):
     print('setSameHeight')
     begin_time=time()
     heightlist = [h2 for h1 in heightmap for h2 in h1]
@@ -323,12 +323,12 @@ def setSameHeight(heightmap, buildArea, env):
             if diff > 0:
                 for i in range(diff):
                     # print(buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y)
-                    ED.placeBlock((buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y), Block('grass_block'))
+                    ED.placeBlock((buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y), Block(block_id))
             elif diff <= 0:
                 for i in range(-diff):
                     # print(buildArea[0]+x, heightmap[x][y]+i, buildArea[1]+y)
                     ED.placeBlock((buildArea[0]+x, heightmap[x][y]-1-i, buildArea[1]+y), Block('air'))
-                ED.placeBlock((buildArea[0]+x, heightmap[x][y]-1+diff, buildArea[1]+y), Block('grass_block'))
+                ED.placeBlock((buildArea[0]+x, heightmap[x][y]-1+diff, buildArea[1]+y), Block(block_id))
 
     end_time=time()
     print('setSameHeight done')

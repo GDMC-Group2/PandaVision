@@ -6,6 +6,8 @@ from Building import hotel
 from tools import getEnv
 import interfaceUtils
 from basement import Basement as bs
+from air import Air as ar
+from searchBlockinfo import SearchBlocks
 
 
 # import sys
@@ -81,11 +83,12 @@ def main():
         HM_Area = heightmap[Area[0]:Area[0]+Area[2],Area[1]:Area[1]+Area[3]]
         ActualArea = [area[0]+Area[0],area[1]+Area[1],Area[2],Area[3]]
         surface_reconstruction.RemoveTrees(HM_Area, ActualArea)
-        height = terrain.setSameHeight(HM_Area, ActualArea, env)
-        #Area
-
+        SB = SearchBlocks(worldSlice, Area)
+        block_id = SB.run()
+        height = terrain.setSameHeight(HM_Area, ActualArea, block_id)
+        print("Surface BlockID: ", block_id)
         buildingMap, buildingDict = city_planning.executeCityPlanning(Area,isMaxArea)
-        building_placement.placeCity(buildingMap, buildingDict, ActualArea, height,isMaxArea)
+        building_placement.placeCity(buildingMap, buildingDict, ActualArea, height, block_id, isMaxArea)
         if isMaxArea == 1:
             x = ActualArea[0] + int(ActualArea[2]/2)
             y = height

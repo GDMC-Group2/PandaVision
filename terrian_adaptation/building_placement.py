@@ -98,7 +98,7 @@ def placeBuildings(buildingDict, area, height):
         if building == 'honey_farm_n':
             honey_farm.honey_farm(area[0]+location[0],height,area[1]+location[1],'n')
         if building == 'honey_farm_e':
-            honey_farm.honey_farm(area[0]+location[0],height,area[1]+location[1],'e')
+            honey_farm.honey_farm(area[0]+location[0]+10,height,area[1]+location[1],'e')
 def placeMainRoad(x,y,z,l,f):
     y = y-1
     if f == 'x':
@@ -128,7 +128,7 @@ def setSurface(buildingMap, area, height, BlockType):
             if type(buildingMap[x][y]) == int or buildingMap[x][y] in CoverList:
                 ED.placeBlock((area[0]+x,height-1,area[1]+y),Block(BlockType))
 
-def placeCity(buildingMap, buildingDict, area, height, isMaxArea = 0):
+def placeCity(buildingMap, buildingDict, area, height,isMaxArea = 0):
     wall_width = 11
     x_len = area[2]
     y_len = area[3]

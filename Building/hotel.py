@@ -3324,33 +3324,34 @@ def Firework_s(x,y,z,q_id,w_id,e_id,r_id,t_id,y_id,u_id,i_id):
 def fire(x,y,z):
     for xx in range(7):
         for zz in range(2):
-            fire="firework_rocket{Fireworks:{Flight:9,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
-            command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.0 {fire} 64"
-            runCommand(command)
-            fire="firework_rocket{Fireworks:{Flight:7,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
-            command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.1 {fire} 64"
-            runCommand(command)
-            fire="firework_rocket{Fireworks:{Flight:8,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
-            command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.2 {fire} 64"
-            runCommand(command)
-            fire="firework_rocket{Fireworks:{Flight:10,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
-            command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.3 {fire} 64"
-            runCommand(command)
-            fire="firework_rocket{Fireworks:{Flight:8,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
-            command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.4 {fire} 64"
-            runCommand(command)
-            fire="firework_rocket{Fireworks:{Flight:9,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
-            command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.5 {fire} 64"
-            runCommand(command)
-            fire="firework_rocket{Fireworks:{Flight:10,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
-            command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.6 {fire} 64"
-            runCommand(command)
-            fire="firework_rocket{Fireworks:{Flight:8,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
-            command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.7 {fire} 64"
-            runCommand(command)
-            fire="firework_rocket{Fireworks:{Flight:9,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031]}]}}"
-            command = f"replaceitem block {x-9+3*xx} {y} {z-zz} container.8 {fire} 64"
-            runCommand(command)
+            fire="firework_rocket{Fireworks:{Flight:9,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031],FadeColors:[I;15790320]}]}}"
+            command = f"item replace block {x-9+3*xx} {y} {z-zz} container.0 with {fire} 64"
+            editor.runCommand(command,syncWithBuffer=True)
+            fire="firework_rocket{Fireworks:{Flight:7,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031],FadeColors:[I;15790320]}]}}"
+            command = f"item replace block {x-9+3*xx} {y} {z-zz} container.1 with {fire} 64"
+            editor.runCommand(command,syncWithBuffer=True)
+            fire="firework_rocket{Fireworks:{Flight:8,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031],FadeColors:[I;15790320]}]}}"
+            command = f"item replace block {x-9+3*xx} {y} {z-zz} container.2 with {fire} 64"
+            editor.runCommand(command,syncWithBuffer=True)
+            fire="firework_rocket{Fireworks:{Flight:10,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031],FadeColors:[I;15790320]}]}}"
+            command = f"item replace block {x-9+3*xx} {y} {z-zz} container.3 with {fire} 64"
+            editor.runCommand(command,syncWithBuffer=True)
+            fire="firework_rocket{Fireworks:{Flight:8,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031],FadeColors:[I;15790320]}]}}"
+            command = f"item replace block {x-9+3*xx} {y} {z-zz} container.4 with {fire} 64"
+            editor.runCommand(command,syncWithBuffer=True)
+            fire="firework_rocket{Fireworks:{Flight:9,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031],FadeColors:[I;15790320]}]}}"
+            command = f"item replace block {x-9+3*xx} {y} {z-zz} container.5 with {fire} 64"
+            editor.runCommand(command,syncWithBuffer=True)
+            fire="firework_rocket{Fireworks:{Flight:10,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031],FadeColors:[I;15790320]}]}}"
+            command = f"item replace block {x-9+3*xx} {y} {z-zz} container.6 with {fire} 64"
+            editor.runCommand(command,syncWithBuffer=True)
+            fire="firework_rocket{Fireworks:{Flight:8,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031],FadeColors:[I;15790320]}]}}"
+            command = f"item replace block {x-9+3*xx} {y} {z-zz} container.7 with {fire} 64"
+            editor.runCommand(command,syncWithBuffer=True)
+            fire="firework_rocket{Fireworks:{Flight:9,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;1017855,1370367,3590655,8567039,15531845,16733376,8912655,12876031],FadeColors:[I;15790320]}]}}"
+            command = f"item replace block {x-9+3*xx} {y} {z-zz} container.8 with {fire} 64"
+            editor.runCommand(command,syncWithBuffer=True)
+            #print(f"{x-9+3*xx},{y},{z-zz}")
 
 
 def floor_light(x,y,z,u_id,g_id,c_id,r_id): #u_id=glowtone,g_id=glass,c_id=carpet r_id=red_carpet 床照明

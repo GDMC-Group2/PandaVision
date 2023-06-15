@@ -83,10 +83,10 @@ def main():
         HM_Area = heightmap[Area[0]:Area[0]+Area[2],Area[1]:Area[1]+Area[3]]
         ActualArea = [area[0]+Area[0],area[1]+Area[1],Area[2],Area[3]]
         surface_reconstruction.RemoveTrees(HM_Area, ActualArea)
-        height = terrain.setSameHeight(HM_Area, ActualArea, env)
         SB = SearchBlocks(worldSlice, Area)
         block_id = SB.run()
-        print("surface BlockID: ", block_id)
+        height = terrain.setSameHeight(HM_Area, ActualArea, block_id)
+        print("Surface BlockID: ", block_id)
         buildingMap, buildingDict = city_planning.executeCityPlanning(Area,isMaxArea)
         building_placement.placeCity(buildingMap, buildingDict, ActualArea, height, block_id, isMaxArea)
         if isMaxArea == 1:
@@ -97,7 +97,7 @@ def main():
     #if 'x' in locals() and 'y' in locals() and 'z' in locals():
         #hotel.hotel3(x,y,z)
 # setbuildarea -500 40 -500 500 100 500
-# setbuildarea -30 40 70 200 200 200
+# setbuildarea 0 40 0 200 200 200
 
 begin_time = time()
 main()

@@ -128,7 +128,7 @@ def setSurface(buildingMap, area, height, BlockType):
             if type(buildingMap[x][y]) == int or buildingMap[x][y] in CoverList:
                 ED.placeBlock((area[0]+x,height-1,area[1]+y),Block(BlockType))
 
-def placeCity(buildingMap, buildingDict, area, height, isMaxArea = 0):
+def placeCity(buildingMap, buildingDict, area, height, q_id,isMaxArea = 0):
     wall_width = 11
     x_len = area[2]
     y_len = area[3]
@@ -140,7 +140,7 @@ def placeCity(buildingMap, buildingDict, area, height, isMaxArea = 0):
         if buildArea >= 60000 and x_len >= 250 and y_len >= 250:
             x_road = int((x_middle-44-wall_width)/2)
             y_road = int((y_middle-44-wall_width)/2)
-            setSurface(buildingMap, area, height, 'smooth_stone')
+            setSurface(buildingMap, area, height, q_id)
             wall.make_wall(height, area)
             placeMainRoad(area[0]+x_middle,height,area[1]+y_middle-y_road-44,x_middle-1,'x')
             placeMainRoad(area[0]+x_middle,height,area[1]+y_middle+y_road+44,x_middle-1,'x')
@@ -152,15 +152,15 @@ def placeCity(buildingMap, buildingDict, area, height, isMaxArea = 0):
             hotel.hotel(area[0]+x_middle,height,area[1]+y_middle)
             placeBuildings(buildingDict, area, height)
         elif buildArea > 16900 and x_len > 130 and y_len > 130:
-            setSurface(buildingMap, area, height, 'smooth_stone')
+            setSurface(buildingMap, area, height, q_id)
             wall.make_wall(height, area)
             hotel.hotel(area[0]+x_middle,height,area[1]+y_middle)
             placeBuildings(buildingDict, area, height)
         else:
-            setSurface(buildingMap, area, height, 'smooth_stone')
+            setSurface(buildingMap, area, height, q_id)
             hotel2.hotel(area[0]+x_middle,height,area[1]+y_middle)
             placeMainRoad(area[0]+x_middle,height,area[1]+y_middle,x_middle,'x')
     else:
         if buildArea >= 1000:
-            setSurface(buildingMap, area, height, 'smooth_stone')
+            setSurface(buildingMap, area, height, q_id)
         placeBuildings(buildingDict, area, height)

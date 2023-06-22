@@ -8,16 +8,18 @@ import interfaceUtils
 from basement import Basement as bs
 from air import Air as ar
 from searchBlockinfo import SearchBlocks
+from box import Box
+import sys
 
-
-# import sys
 # x1 = int(sys.argv[1])
 # z1 = int(sys.argv[2])
 # x2 = int(sys.argv[3])
 # z2 = int(sys.argv[4])
 # area = (x1, z1, x2, z2)
 # print(f"Build area is at position {area[0]}, {area[1]} with size {area[2]}, {area[3]}")
-
+# command=f'setbuildarea {area[0]} 0 {area[1]} {area[2]} 255 {area[3]}'
+# ED = Editor(buffering=True)
+# ED.runCommand(command)
 
 
 def main():
@@ -26,14 +28,16 @@ def main():
     #gがベクトル値
     ED = Editor(buffering=True)
     #s=start x,y,z g=goal x,y,z
-    #s=[-292,-60,-49]
-    #g=[~111,255,~104]
-    #command=f"setbuildarea {s[0]} {s[1]} {s[2]} {g[0]} {g[1]} {g[2]}"
-    #ED.runCommand(command)
+    # s=[args[0], args[1]]
+    # g=[args[2], args[3]]
+    # command=f"setbuildarea {s[0]} 0 {s[1]} {g[0]} 255 {area[1]}"
+    # ED.runCommand(command)
 
     # print("Build area")
     # Here we read start and end coordinates of our build area
     BUILD_AREA = ED.getBuildArea()  # BUILDAREA
+    # BUILD_AREA = Box((area[0], 0, area[1]), (area[2], 255, area[3]))
+    # print(BUILD_AREA)
     # print("world slice")
     WORLDSLICE = ED.loadWorldSlice(BUILD_AREA.toRect(), cache=True)  # this takes a while
     worldSlice = WORLDSLICE
@@ -69,10 +73,11 @@ def main():
     #heightmap, env, flag = getEnv.calcGoodHeightmap(worldSlice)
     #test完了
 
-    bs(area[0]+area[2]//2, heightmap[area[2]//2][area[3]//2], area[1]+area[3]//2)
-    
+    ar(area[0]+area[2]//2, heightmap[area[0]+area[2]//2][area[1]+area[3]//2], area[1]+area[3]//2)
+    bs(area[0]+area[2]//2, heightmap[area[0]+area[2]//2][area[1]+area[3]//2], area[1]+area[3]//2)
+        
     if flag:
-        search_area = [(0, 0, 300, 300)]
+        search_area = [(area[0], area[1], area[2], area[3])]
         print("flag!")
     else:
         search_BuildArea = SBA.SearchBuildArea(area=area, heightmap=heightmap, env=env, worldSlice=worldSlice)
@@ -94,12 +99,29 @@ def main():
             y = height
             z = ActualArea[1] + int(ActualArea[3]/2)
         isMaxArea = 0
-    if 'x' in locals() and 'y' in locals() and 'z' in locals():
-        hotel.hotel3(x,y,z)
+    #if 'x' in locals() and 'y' in locals() and 'z' in locals():
+        #hotel.hotel3(x,y,z)
 # setbuildarea -500 40 -500 500 100 500
 # setbuildarea 0 -70 0 200 200 200
 
-begin_time = time()
-main()
-end_time = time()
-print("run time:", end_time-begin_time)
+# 0 0 0 to 1000 255 1000
+# setbuildarea 0 0 0 1000 255 1000
+
+# -12654 0 5046 to -12398 255 5302
+# setbuildarea -12654 0 5046 256 255 256
+
+# -12606 0 115 to -12350 255 371
+# setbuildarea -12606 0 115 256 255 256
+
+# -5273 0 2582 to -5017 255 2838
+# setbuildarea -5273 0 2582 256 255 256
+
+# 1509 0 -2910 to 1765 255 -2654
+# setbuildarea 1509 0 -2910 256 255 256
+
+# python main.py 0 0 400 400
+if __name__ == "__main__":
+    begin_time = time()
+    main()
+    end_time = time()
+    print("run time:", end_time-begin_time)

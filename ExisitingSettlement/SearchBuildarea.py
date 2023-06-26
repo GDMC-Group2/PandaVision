@@ -116,6 +116,7 @@ class SearchBuildArea():
                 real_pos = (x + self.area[0], self.heightmap[x][z] - 1, z + self.area[1])
                 block_info = self.worldSlice.getBlock(real_pos)
                 if block_info.id not in natural_blocks:
+                    # print(block_info.id)
                     if block_info.id in ID_name_table:
                         block_id = ID_name_table.index(block_info.id)
                     else:

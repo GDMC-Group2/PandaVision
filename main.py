@@ -18,6 +18,7 @@ from searchBlockinfo import SearchBlocks
 # area = (x1, z1, x2, z2)
 # print(f"Build area is at position {area[0]}, {area[1]} with size {area[2]}, {area[3]}")
 
+ED = Editor(buffering=True)
 
 
 def main():
@@ -69,8 +70,8 @@ def main():
     #heightmap, env, flag = getEnv.calcGoodHeightmap(worldSlice)
     #test完了
 
-    ar(area[0]+area[2]//2, heightmap[area[0]+area[2]//2][area[1]+area[3]//2], area[1]+area[3]//2)
-    bs(area[0]+area[2]//2, heightmap[area[0]+area[2]//2][area[1]+area[3]//2], area[1]+area[3]//2)
+    ar(area[0]+area[2]//2, heightmap[area[2]//2][area[3]//2], area[1]+area[3]//2)
+    bs(area[0]+area[2]//2, heightmap[area[2]//2][area[3]//2], area[1]+area[3]//2)
     
     if flag:
         search_area = [(area[0], area[1], area[2], area[3])]
@@ -104,16 +105,16 @@ def main():
 # setbuildarea 0 0 0 1000 255 1000
 
 # -12654 0 5046 to -12398 255 5302
-# setbuildarea -12654 0 5046 256 255 256
+# setbuildarea -12654 0 5046 -12398 255 5302
 
 # -12606 0 115 to -12350 255 371
-# setbuildarea -12606 0 115 256 255 256
+# setbuildarea -12606 0 115 -12350 255 371
 
 # -5273 0 2582 to -5017 255 2838
-# setbuildarea -5273 0 2582 256 255 256
+# setbuildarea -5273 0 2582 -5017 255 2838
 
 # 1509 0 -2910 to 1765 255 -2654
-# setbuildarea 1509 0 -2910 256 255 256
+# setbuildarea 1509 0 -2910 1765 255 -2654
 
 begin_time = time()
 main()

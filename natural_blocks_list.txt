@@ -54,3 +54,4 @@ minecraft:poppy 1
 minecraft:tall_grass 1
 minecraft:rose_bush 1
 minecraft:clay 1
+minecraft:void_air 1

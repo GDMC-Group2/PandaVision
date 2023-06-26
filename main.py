@@ -87,6 +87,10 @@ def main():
         surface_reconstruction.RemoveTrees(HM_Area, ActualArea)
         SB = SearchBlocks(worldSlice, Area)
         block_id = SB.run()
+        if 'water'in block_id:
+            print('block_id is water...')
+            print('change block_id to grass_block')
+            block_id = 'grass_block'
         height = terrain.setSameHeight(HM_Area, ActualArea, block_id)
         print("Surface BlockID: ", block_id)
         buildingMap, buildingDict = city_planning.executeCityPlanning(Area,isMaxArea)

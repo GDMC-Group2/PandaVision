@@ -420,6 +420,186 @@ def well(x,y,z,q_id,w_id,e_id,r_id,t_id,y_id,u_id,i_id):
     editor.placeBlock((x + 1, y + 25, z - 1), Block(y_id, {"facing": "north", "half": "bottom"}))
     editor.placeBlock((x,y+24,z),Block(i_id,{"face":"ceiling","facing":"south"}))
 
+def hot_air_balloon(x,y,z,q_id,w_id,e_id,r_id,t_id):
+    for yy in range(20):
+        editor.placeBlock((x,y+yy,z),Block(q_id))
+    for xx in range(5):
+        editor.placeBlock((x-2+xx,y+20,z),Block(w_id,{"axis":"x"}))
+    editor.placeBlock((x+3,y+20,z),Block(e_id,{"facing":"west","half":"top","shape":"straight"}))
+    editor.placeBlock((x+4,y+21,z),Block(e_id,{"facing":"east","half":"bottom","shape":"straight"}))
+    editor.placeBlock((x+4,y+21,z-1),Block(e_id,{"facing":"north","half":"bottom","shape":"inner_right"}))
+    editor.placeBlock((x+4,y+21,z+1),Block(e_id,{"facing":"south","half":"bottom","shape":"inner_left"}))
+
+    editor.placeBlock((x-3,y+20,z),Block(e_id,{"facing":"east","half":"top","shape":"straight"}))
+    editor.placeBlock((x-4,y+21,z),Block(e_id,{"facing":"west","half":"bottom","shape":"straight"}))
+    editor.placeBlock((x-4,y+21,z-1),Block(e_id,{"facing":"north","half":"bottom","shape":"inner_left"}))
+    editor.placeBlock((x-4,y+21,z+1),Block(e_id,{"facing":"south","half":"bottom","shape":"inner_right"}))
+
+    editor.placeBlock((x-4,y+20,z),Block(r_id,{"type":"top"}))
+    editor.placeBlock((x+4,y+20,z),Block(r_id,{"type":"top"}))
+
+    for xx in range(5):
+        editor.placeBlock((x-2+xx,y+20,z+1),Block(r_id,{"type":"top"}))
+        editor.placeBlock((x-2+xx,y+20,z-1),Block(r_id,{"type":"top"}))
+
+    editor.placeBlock((x-3,y+21,z+1),Block(t_id))
+    editor.placeBlock((x+3,y+21,z+1),Block(t_id))
+    editor.placeBlock((x+3,y+21,z-1),Block(t_id))
+    editor.placeBlock((x-3,y+21,z-1),Block(t_id))
+
+    editor.placeBlock((x-5,y+21,z),Block(t_id))
+    editor.placeBlock((x-5,y+22,z),Block(r_id,{"type":"bottom"}))
+    editor.placeBlock((x-6,y+22,z),Block(e_id,{"facing":"west","half":"bottom","shape":"straight"}))
+
+    editor.placeBlock((x+2,y+21,z+2),Block(w_id))
+    editor.placeBlock((x-2,y+21,z+2),Block(w_id))
+    editor.placeBlock((x+2,y+21,z-2),Block(w_id))
+    editor.placeBlock((x-2,y+21,z-2),Block(w_id))
+
+    for xx in range(3):
+        editor.placeBlock((x-1+xx,y+21,z+2),Block(e_id,{"facing":"north","half":"top","shape":"straight"}))
+        editor.placeBlock((x-1+xx,y+21,z-2),Block(e_id,{"facing":"south","half":"top","shape":"straight"}))
+
+def boat(x,y,z,q_id,w_id,e_id,r_id,t_id,y_id,u_id,i_id):
+    editor.placeBlock((x-3,y,z+1),Block(q_id))
+    for yy in range(2):
+        editor.placeBlock((x-3,y-1-yy,z+1),Block(w_id))
+    editor.placeBlock((x-3,y-3,z+1),Block(e_id,{"hanging":"true"}))
+
+    editor.placeBlock((x+3,y,z-1),Block(q_id))
+    for yy in range(2):
+        editor.placeBlock((x+3,y-1-yy,z-1),Block(w_id))
+    editor.placeBlock((x+3,y-3,z-1),Block(e_id,{"hanging":"true"}))
+
+    for zz in range(3):
+        editor.placeBlock((x+4,y+2,z-1+zz),Block(r_id))
+    editor.placeBlock((x+4,y+3,z-1),Block(e_id))
+    editor.placeBlock((x+4,y+3,z+1),Block(e_id))
+
+    for yy in range(3):
+        editor.placeBlock((x+2,y+2+yy,z-2),Block(t_id))
+        editor.placeBlock((x+2,y+2+yy,z+2),Block(t_id))
+        editor.placeBlock((x-1,y+2+yy,z-2),Block(t_id))
+        editor.placeBlock((x-1,y+2+yy,z+2),Block(t_id))
+
+    editor.placeBlock((x+2,y+5,z-2),Block(r_id))
+    editor.placeBlock((x+2,y+5,z+2),Block(r_id))
+    editor.placeBlock((x-1,y+5,z-2),Block(r_id))
+    editor.placeBlock((x-1,y+5,z+2),Block(r_id))
+
+    for xx in range(6):
+        editor.placeBlock((x-2+xx,y+4,z+1),Block(y_id,{"type":"top"}))
+        editor.placeBlock((x-2+xx,y+4,z-1),Block(y_id,{"type":"top"}))
+
+    for xx in range(4):
+        editor.placeBlock((x-1+xx,y+6,z+1),Block(y_id,{"type":"bottom"}))
+        editor.placeBlock((x-1+xx,y+6,z-1),Block(y_id,{"type":"bottom"}))
+
+    editor.placeBlock((x-1,y+5,z-1),Block(u_id))
+    editor.placeBlock((x-1,y+5,z+1),Block(u_id))
+    editor.placeBlock((x+2,y+5,z-1),Block(u_id))
+    editor.placeBlock((x+2,y+5,z+1),Block(u_id))
+
+    editor.placeBlock((x-1,y+6,z),Block(y_id,{"type":"bottom"}))
+    editor.placeBlock((x+2,y+6,z),Block(y_id,{"type":"bottom"}))
+    editor.placeBlock((x-1,y+4,z),Block(y_id,{"type":"top"}))
+    editor.placeBlock((x+2,y+4,z),Block(y_id,{"type":"top"}))
+
+    for xx in range(2):
+        editor.placeBlock((x+xx,y+6,z),Block(i_id,{"facing":"south","lit":"true"}))
+
+def paddle(x,y,z,q_id,w_id,e_id):
+    editor.placeBlock((x+1,y,z+3),Block(q_id,{"axis":"z"}))
+    editor.placeBlock((x+1,y,z-3),Block(q_id,{"axis":"z"}))
+
+    editor.placeBlock((x+1,y,z+4),Block(e_id,{"face":"wall","facing":"south"}))
+    editor.placeBlock((x+1,y,z-4),Block(e_id,{"face":"wall","facing":"north"}))
+
+    editor.placeBlock((x+1,y+1,z+3),Block(w_id,{"face":"floor","facing":"west"}))
+    editor.placeBlock((x+1,y-1,z+3),Block(w_id,{"face":"ceiling","facing":"west"}))
+    editor.placeBlock((x,y,z+3),Block(w_id,{"face":"wall","facing":"west"}))
+    editor.placeBlock((x+2,y,z+3),Block(w_id,{"face":"wall","facing":"east"}))
+
+    editor.placeBlock((x+1,y+1,z-3),Block(w_id,{"face":"floor","facing":"west"}))
+    editor.placeBlock((x+1,y-1,z-3),Block(w_id,{"face":"ceiling","facing":"west"}))
+    editor.placeBlock((x,y,z-3),Block(w_id,{"face":"wall","facing":"west"}))
+    editor.placeBlock((x+2,y,z-3),Block(w_id,{"face":"wall","facing":"east"}))
+
+def balloon(x,y,z,q_id,w_id,e_id):
+    editor.placeBlock((x-1,y,z+2),Block(q_id))
+    for yy in range(3):
+        editor.placeBlock((x-2,y+yy,z+2),Block(q_id))
+    for yy in range(2):
+        editor.placeBlock((x-3,y+1+yy,z+2),Block(q_id))
+
+    editor.placeBlock((x+2,y,z+2),Block(q_id))
+    for yy in range(3):
+        editor.placeBlock((x+3,y+yy,z+2),Block(q_id))
+    for yy in range(2):
+        editor.placeBlock((x+4,y+1+yy,z+2),Block(q_id))
+
+    editor.placeBlock((x-1,y,z-2),Block(q_id))
+    for yy in range(3):
+        editor.placeBlock((x-2,y+yy,z-2),Block(q_id))
+    for yy in range(2):
+        editor.placeBlock((x-3,y+1+yy,z-2),Block(q_id))
+
+    editor.placeBlock((x+2,y,z-2),Block(q_id))
+    for yy in range(3):
+        editor.placeBlock((x+3,y+yy,z-2),Block(q_id))
+    for yy in range(2):
+        editor.placeBlock((x+4,y+1+yy,z-2),Block(q_id))
+
+    editor.placeBlock((x-3,y+3,z+2),Block(w_id,{"facing":"north","half":"top","shape":"straight"}))
+    editor.placeBlock((x+3,y+3,z+2),Block(w_id,{"facing":"north","half":"top","shape":"straight"}))
+    editor.placeBlock((x-3,y+3,z-2),Block(w_id,{"facing":"south","half":"top","shape":"straight"}))
+    editor.placeBlock((x+3,y+3,z-2),Block(w_id,{"facing":"south","half":"top","shape":"straight"}))
+    for xx in range(9):
+        editor.placeBlock((x-4+xx,y+4,z+2),Block(e_id))
+        editor.placeBlock((x-4+xx,y+4,z-2),Block(e_id))
+        editor.placeBlock((x-4+xx,y+8,z+2),Block(e_id))
+        editor.placeBlock((x-4+xx,y+8,z-2),Block(e_id))
+        for zz in range(3):
+            editor.placeBlock((x-4+xx,y+3,z-1+zz),Block(e_id))
+            editor.placeBlock((x-4+xx,y+9,z-1+zz),Block(e_id))
+        for yy in range(3):
+            editor.placeBlock((x-4+xx,y+5+yy,z+3),Block(e_id))
+            editor.placeBlock((x-4+xx,y+5+yy,z-3),Block(e_id))
+
+    for yy in range(5):
+        editor.placeBlock((x+5,y+4+yy,z-2),Block(e_id))
+        editor.placeBlock((x+5,y+4+yy,z+2),Block(e_id))
+        editor.placeBlock((x-5,y+4+yy,z-2),Block(e_id))
+        editor.placeBlock((x-5,y+4+yy,z+2),Block(e_id))
+    for zz in range(3):
+        editor.placeBlock((x+5,y+4,z-1+zz),Block(e_id))
+        editor.placeBlock((x+5,y+8,z-1+zz),Block(e_id))
+        editor.placeBlock((x-5,y+4,z-1+zz),Block(e_id))
+        editor.placeBlock((x-5,y+8,z-1+zz),Block(e_id))
+    editor.placeBlock((x+5,y+3,z),Block(e_id))
+    editor.placeBlock((x+5,y+9,z),Block(e_id))
+    editor.placeBlock((x+5,y+6,z-3),Block(e_id))
+    editor.placeBlock((x+5,y+6,z+3),Block(e_id))
+    editor.placeBlock((x-5,y+3,z),Block(e_id))
+    editor.placeBlock((x-5,y+9,z),Block(e_id))
+    editor.placeBlock((x-5,y+6,z-3),Block(e_id))
+    editor.placeBlock((x-5,y+6,z+3),Block(e_id))
+
+    for yy in range(3):
+        editor.placeBlock((x+6,y+5+yy,z-2),Block(e_id))
+        editor.placeBlock((x+6,y+5+yy,z+2),Block(e_id))
+        editor.placeBlock((x-6,y+5+yy,z-2),Block(e_id))
+        editor.placeBlock((x-6,y+5+yy,z+2),Block(e_id))
+    for zz in range(3):
+        editor.placeBlock((x+6,y+4,z-1+zz),Block(e_id))
+        editor.placeBlock((x+6,y+8,z-1+zz),Block(e_id))
+        editor.placeBlock((x-6,y+4,z-1+zz),Block(e_id))
+        editor.placeBlock((x-6,y+8,z-1+zz),Block(e_id))
+
+    for yy in range(3):
+        for zz in range(3):
+            editor.placeBlock((x+7,y+5+yy,z-1+zz),Block(e_id))
+            editor.placeBlock((x-7,y+5+yy,z-1+zz),Block(e_id))
 
 def Basement(x,y,z):
     air(x,y-20,z,"air")
@@ -434,4 +614,8 @@ def Basement(x,y,z):
     window(x,y-20,z,"glass","spruce_stairs","spruce_slab","air")
     add(x,y-20,z,"stripped_dark_oak_log","glass","water","wheat")
     well(x,y-20,z,"stone_bricks","water","mossy_stone_brick_stairs","mossy_stone_brick_wall","jungle_fence","spruce_trapdoor","spruce_slab","grindstone")
+    hot_air_balloon(x,y+6,z,"oak_fence","stripped_spruce_log","spruce_stairs","spruce_slab","spruce_planks")
+    boat(x,y+26,z,"cobblestone_wall","chain","lantern","sandstone_wall","oak_fence","spruce_slab","stripped_spruce_log","campfire")
+    paddle(x,y+27,z,"stripped_birch_log","grindstone","stone_button")
+    balloon(x,y+32,z,"oak_fence","acacia_stairs","white_wool")
 

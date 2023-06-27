@@ -1,5 +1,5 @@
 from interfaceUtils import runCommand
-from gdpc import Editor, Block, Transform, geometry
+from gdpc import Editor, Block
 
 editor = Editor(buffering=True)
 
@@ -422,7 +422,7 @@ def well(x,y,z,q_id,w_id,e_id,r_id,t_id,y_id,u_id,i_id):
 
 
 def Basement(x,y,z):
-
+    air(x,y-20,z,"air")
     floor(x,y-20,z,"stripped_dark_oak_log","dark_oak_trapdoor","spruce_planks","stone_bricks")
     wall1(x,y-20,z,"spruce_planks","bookshelf","stripped_dark_oak_log","grindstone","lantern")
     wall2(x,y-20,z,"spruce_planks","chest","stripped_dark_oak_log","barrel")

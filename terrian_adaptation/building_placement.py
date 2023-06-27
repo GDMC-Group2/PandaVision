@@ -150,7 +150,7 @@ def placeCity(buildingMap, buildingDict, area, height,q_id,isMaxArea = 0):
             bridge.Bridge(area[0]+x_middle-x_road-44,height,area[1]+y_middle)
             bridge.Bridge(area[0]+x_middle+x_road+44,height,area[1]+y_middle)
             hotel.hotel(area[0]+x_middle,height,area[1]+y_middle)
-            basement.Basement(area[0]+x_middle-46,height,area[1+y_middle]-46)
+            basement.Basement(area[0]+x_middle-46,height,area[1]+y_middle-46)
             placeBuildings(buildingDict, area, height)
         elif buildArea > 16900 and x_len > 130 and y_len > 130:
             setSurface(buildingMap, area, height, q_id)

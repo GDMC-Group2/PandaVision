@@ -44,19 +44,33 @@ class SearchBlocks:
                     self.blockDict[self.blockName.id] = 1
         self.blockList = list(self.blockDict.items())
         self.blockList.sort(key=lambda x: x[1], reverse=True)
-        self.mostCommonBlock = self.blockList[0][0]
-        self.mostCommonBlockNum = self.blockList[0][1]
-        for i in range(len(self.blockList)):
-            if self.blockList[i][1] == self.mostCommonBlockNum:
-                self.mostCommonBlockList.append(self.blockList[i][0])
-                self.mostCommonBlockNumList.append(self.blockList[i][1])
+        # self.mostCommonBlock = self.blockList[0][0]
+        # self.mostCommonBlockNum = self.blockList[0][1]
+        
+        if 'water' in self.blockList[0][0]:
+            if 'sand' in self.blockList[1][0]:
+                return self.blockList[2][0]
             else:
-                break
+                return self.blockList[1][0]
+        else:
+            return self.blockList[0][0]
+        
+        # for i in range(len(self.blockList)):
+        #     if self.blockList[i][1] == self.mostCommonBlockNum:
+        #         self.mostCommonBlockList.append(self.blockList[i][0])
+        #         self.mostCommonBlockNumList.append(self.blockList[i][1])
+        #     else:
+        #         break
         # self.blockNum = len(self.blockList)
         # for i in range(self.blockNum):
         #     self.blockNameList.append(self.blockList[i][0])
         #     self.blockNumList.append(self.blockList[i][1])
         # return self.mostCommonBlockList, self.mostCommonBlockNumList, self.blockNameList, self.blockNumList
-        if 'water' in self.mostCommonBlockList[0]:
-            return self.mostCommonBlockList[1]
-        return self.mostCommonBlock
+        
+        # if 'water' in self.mostCommonBlockList[0] and len(self.mostCommonBlockNumList) > 1:
+        #     print(self.mostCommonBlockList)
+        #     return self.mostCommonBlockList[1]
+        # elif 'water' in self.mostCommonBlockList[0] and len(self.mostCommonBlockNumList) == 1:
+        #     return 'grass_block'
+        # else:
+        #     return self.mostCommonBlock

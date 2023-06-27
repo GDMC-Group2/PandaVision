@@ -5,10 +5,7 @@ from terrian_adaptation import terrain, building_placement, city_planning, surfa
 from Building import hotel
 from tools import getEnv
 import interfaceUtils
-from basement import Basement as bs
-from air import Air as ar
 from searchBlockinfo import SearchBlocks
-
 
 # import sys
 # x1 = int(sys.argv[1])
@@ -17,9 +14,6 @@ from searchBlockinfo import SearchBlocks
 # z2 = int(sys.argv[4])
 # area = (x1, z1, x2, z2)
 # print(f"Build area is at position {area[0]}, {area[1]} with size {area[2]}, {area[3]}")
-
-ED = Editor(buffering=True)
-
 
 def main():
     #sとgの仕様
@@ -35,11 +29,18 @@ def main():
     # print("Build area")
     # Here we read start and end coordinates of our build area
     BUILD_AREA = ED.getBuildArea()  # BUILDAREA
+
+    if BUILD_AREA.size[0] * BUILD_AREA.size[1] >= 640000:
+        newRect = BUILD_AREA.toRect()
+        newRect.begin = (newRect.begin[0] + newRect.size[0]//4, newRect.begin[1] + newRect.size[1]//4)
+        newRect.size = (newRect.size[0]//2, newRect.size[1]//2)
+        WORLDSLICE = ED.loadWorldSlice(newRect, cache=True)  # this takes a while
+    else:
     # print("world slice")
-    WORLDSLICE = ED.loadWorldSlice(BUILD_AREA.toRect(), cache=True)  # this takes a while
+        WORLDSLICE = ED.loadWorldSlice(BUILD_AREA.toRect(), cache=True)  # this takes a while
     worldSlice = WORLDSLICE
     print(worldSlice)
-    
+
 
     # print("heights")
     #heights = WORLDSLICE.heightmaps["MOTION_BLOCKING_NO_LEAVES"]
@@ -48,17 +49,6 @@ def main():
     print(f"Build area is at position {area[0]}, {area[1]} with size {area[2]}, {area[3]}")
     command="gamerule doMobSpawning false"
     ED.runCommand(command)
-    # ------------------------------------
-    if area[2] * area[3] >= 360000:
-        new_area = []
-        new_area.append(area[0] + area[2] // 5)
-        new_area.append(area[1] + area[3] // 5)
-        new_area.append(area[2] - area[2] // 5 * 2)
-        new_area.append(area[3] - area[3] // 5 * 2)
-        area = new_area
-    # ------------------------------------
-
-    
 
 
     #heightmap = WORLDSLICE.heightmaps["MOTION_BLOCKING_NO_LEAVES"]
@@ -70,9 +60,7 @@ def main():
     #heightmap, env, flag = getEnv.calcGoodHeightmap(worldSlice)
     #test完了
 
-    ar(area[0]+area[2]//2, heightmap[area[2]//2][area[3]//2], area[1]+area[3]//2)
-    bs(area[0]+area[2]//2, heightmap[area[2]//2][area[3]//2], area[1]+area[3]//2)
-    
+
     if flag:
         search_area = [(area[0], area[1], area[2], area[3])]
         print("flag!")

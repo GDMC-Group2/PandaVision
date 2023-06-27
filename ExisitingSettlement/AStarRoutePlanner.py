@@ -326,9 +326,10 @@ def astar(
     explored_loc_cost_dict: Dict[Location, float] = {init_loc: 0.0}
 
     while not frontier_queue.empty:
-        if time() - begin_time > limit_time:
-            print('time over')
-            break
+        # No Limit Time
+        # if time() - begin_time > limit_time:
+        #     print('time over')
+        #     break
         current_node: Node = frontier_queue.pop()
         current_loc: Location = current_node.location
 

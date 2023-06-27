@@ -20,8 +20,8 @@ class SearchBlocks:
         self.blockList = []
         self.mostCommonBlock = ""
         self.mostCommonBlockNum = 0
-        # self.mostCommonBlockList = []
-        # self.mostCommonBlockNumList = []
+        self.mostCommonBlockList = []
+        self.mostCommonBlockNumList = []
         # self.blockNum = 0
         self.blockName = ""
         # self.blockNumList = []
@@ -46,15 +46,17 @@ class SearchBlocks:
         self.blockList.sort(key=lambda x: x[1], reverse=True)
         self.mostCommonBlock = self.blockList[0][0]
         self.mostCommonBlockNum = self.blockList[0][1]
-        # for i in range(len(self.blockList)):
-        #     if self.blockList[i][1] == self.mostCommonBlockNum:
-        #         self.mostCommonBlockList.append(self.blockList[i][0])
-        #         self.mostCommonBlockNumList.append(self.blockList[i][1])
-        #     else:
-        #         break
+        for i in range(len(self.blockList)):
+            if self.blockList[i][1] == self.mostCommonBlockNum:
+                self.mostCommonBlockList.append(self.blockList[i][0])
+                self.mostCommonBlockNumList.append(self.blockList[i][1])
+            else:
+                break
         # self.blockNum = len(self.blockList)
         # for i in range(self.blockNum):
         #     self.blockNameList.append(self.blockList[i][0])
         #     self.blockNumList.append(self.blockList[i][1])
         # return self.mostCommonBlockList, self.mostCommonBlockNumList, self.blockNameList, self.blockNumList
+        if 'water' in self.mostCommonBlockList[0]:
+            return self.mostCommonBlockList[1]
         return self.mostCommonBlock

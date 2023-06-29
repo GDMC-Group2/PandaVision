@@ -68,6 +68,8 @@ def main():
         search_BuildArea = SBA.SearchBuildArea(area=area, heightmap=heightmap, env=env, worldSlice=worldSlice)
         search_area = search_BuildArea.output() # tuple in list
         print(search_area)
+        if search_area == []:
+            search_area = [(area[0]+area[2]//4, area[1]+area[3]//4, area[2]//4, area[3]//4)]
     isMaxArea = 1
     for Area in search_area:
         HM_Area = heightmap[Area[0]:Area[0]+Area[2],Area[1]:Area[1]+Area[3]]
@@ -93,20 +95,28 @@ def main():
 # setbuildarea -500 40 -500 500 100 500
 # setbuildarea 0 -70 0 200 200 200
 
-# 0 0 0 to 1000 255 1000
-# setbuildarea 0 0 0 1000 255 1000
+"""
+-450 0 0 to 550 255 1000
+setbuildarea -450 0 0 550 255 1000
+tp -450 100 0
 
-# -12654 0 5046 to -12398 255 5302
-# setbuildarea -12654 0 5046 -12398 255 5302
+-12800 0 4850 to -12544 255 5106
+setbuildarea -12800 0 4850 -12544 255 5106
+tp -12800 100 4850
 
-# -12606 0 115 to -12350 255 371
-# setbuildarea -12606 0 115 -12350 255 371
+-12816 0 64 to -12560 255 320
+setbuildarea -12816 0 64 -12560 255 320
+tp -12816 100 64
 
-# -5273 0 2582 to -5017 255 2838
-# setbuildarea -5273 0 2582 -5017 255 2838
+-5500 0 2200 to -5100 255 2600
+setbuildarea -5500 0 2200 -5100 255 2600
+tp -5500 100 2200
 
-# 1509 0 -2910 to 1765 255 -2654
-# setbuildarea 1509 0 -2910 1765 255 -2654
+1400 0 -3000 to 1656 255 -2810
+setbuildarea 1400 0 -3000 1656 255 -2810
+tp 1400 100 -3000
+"""
+
 
 begin_time = time()
 main()
